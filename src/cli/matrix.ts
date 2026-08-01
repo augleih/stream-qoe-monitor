@@ -56,3 +56,4 @@ try {
 console.log(failures
   ? `\n${failures} runs failed — 같은 명령 재실행 시 실패분만 다시 시도한다`
   : '\nall runs complete');
+process.exitCode = failures ? 1 : 0;
