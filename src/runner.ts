@@ -25,13 +25,6 @@ export async function launchBrowser(): Promise<Browser> {
 export async function runOne(
   browser: Browser, baseUrl: string, spec: RunSpec, scenario?: Scenario,
 ): Promise<RunResult> {
-  const context = await browser.newContext(); // 회차마다 신규 — 캐시 이월 방지
-  const page = await context.newPage();
-  const cdp = await context.newCDPSession(page);
-  await cdp.send('Network.enable');
-  // 네트워크 조건은 페이지 진입 전 설정 (설계 원칙)
-  await cdp.send('Network.emulateNetworkConditions', NETWORKS[spec.network]);
-
   const startedAt = new Date().toISOString();
   const url = `${baseUrl}/player/index.html?player=${spec.player}` +
     `&src=${encodeURIComponent(spec.stream.url)}&observe=${spec.observeMs}`;
@@ -43,10 +36,18 @@ export async function runOne(
     samples: RunResult['samples'];
     error: string | null;
   };
+
+  const context = await browser.newContext(); // 회차마다 신규 — 캐시 이월 방지
   try {
+    const page = await context.newPage();
+    const cdp = await context.newCDPSession(page);
+    await cdp.send('Network.enable');
+    // 네트워크 조건은 페이지 진입 전 설정 (설계 원칙)
+    await cdp.send('Network.emulateNetworkConditions', NETWORKS[spec.network]);
+
     if (scenario?.setup) await scenario.setup(page, cdp, spec);
     await page.goto(url);
-    const running = scenario?.run ? scenario.run(page, cdp, spec) : null;
+    const running = scenario?.run ? scenario.run(page, cdp, spec).catch(() => {}) : null;
     await page.waitForFunction(
       () => (window as never as { __qoe?: { isDone(): boolean } }).__qoe?.isDone() === true,
       undefined, { timeout: spec.observeMs + 90_000 },
@@ -54,7 +55,7 @@ export async function runOne(
     raw = await page.evaluate(
       () => (window as never as { __qoe: { result(): unknown } }).__qoe.result(),
     ) as typeof raw;
-    if (running) await running.catch(() => {});
+    if (running) await running;
   } finally {
     await context.close();
   }

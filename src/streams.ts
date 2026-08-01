@@ -20,6 +20,6 @@ export const STREAMS: StreamDef[] = [
   {
     id: 'dash_live', proto: 'dash', live: true,
     url: 'https://livesim2.dashif.org/livesim2/testpic_2s/Manifest.mpd',
-    note: 'DASH-IF livesim2 상시 시뮬레이터 (설계서의 Akamai 대신 선정 — 안정성)',
+    note: 'DASH-IF livesim2 상시 시뮬레이터 (설계서의 Akamai 대신 선정 — 안정성). 대체: https://livesim2.dashif.org/livesim2/testpic_6s/Manifest.mpd (동일 호스트의 다른 자산 — 호스트 전체 장애 시에는 스트림 교체 필요)',
   },
 ];
