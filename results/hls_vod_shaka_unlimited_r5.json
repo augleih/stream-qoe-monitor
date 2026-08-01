@@ -1,0 +1,569 @@
+{
+  "runId": "hls_vod_shaka_unlimited_r5",
+  "player": "shaka",
+  "streamId": "hls_vod",
+  "streamUrl": "https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_16x9/bipbop_16x9_variant.m3u8",
+  "network": "unlimited",
+  "rep": 5,
+  "scenario": null,
+  "startedAt": "2026-08-01T04:35:17.256Z",
+  "libVersion": "v5.2.4",
+  "observeMs": 60000,
+  "metrics": {
+    "manifest_loaded_ms": 72,
+    "first_segment_ms": 213,
+    "metadata_ms": 262,
+    "first_frame_ms": 283,
+    "startup_ms": 283,
+    "breakdown": {
+      "manifest": 72,
+      "to_first_segment": 141,
+      "to_metadata": 49,
+      "to_first_frame": 21
+    },
+    "rebuffer_count": 2,
+    "rebuffer_time_ms": 90,
+    "rebuffer_ratio": 0.0015,
+    "dropped_ratio": 0,
+    "time_weighted_height": 1019
+  },
+  "timeline": [
+    {
+      "t": 0,
+      "type": "t0"
+    },
+    {
+      "t": 240,
+      "type": "quality_switch",
+      "detail": {
+        "height": 720,
+        "bitrate": 1030138
+      }
+    },
+    {
+      "t": 247,
+      "type": "waiting_initial"
+    },
+    {
+      "t": 262,
+      "type": "loadedmetadata"
+    },
+    {
+      "t": 283,
+      "type": "first_frame"
+    },
+    {
+      "t": 344,
+      "type": "quality_switch",
+      "detail": {
+        "height": 1080,
+        "bitrate": 1924009
+      }
+    },
+    {
+      "t": 10024,
+      "type": "stall_start"
+    },
+    {
+      "t": 10074,
+      "type": "stall_end",
+      "detail": 50
+    },
+    {
+      "t": 27517,
+      "type": "stall_start"
+    },
+    {
+      "t": 27557,
+      "type": "stall_end",
+      "detail": 39
+    },
+    {
+      "t": 60002,
+      "type": "observe_end"
+    }
+  ],
+  "samples": [
+    {
+      "t": 1001,
+      "ct": 0.68,
+      "buffer_s": 9.3,
+      "height": 720,
+      "dropped": 0,
+      "decoded": 26
+    },
+    {
+      "t": 2000,
+      "ct": 1.68,
+      "buffer_s": 8.3,
+      "height": 720,
+      "dropped": 0,
+      "decoded": 56
+    },
+    {
+      "t": 3000,
+      "ct": 2.68,
+      "buffer_s": 7.3,
+      "height": 720,
+      "dropped": 0,
+      "decoded": 86
+    },
+    {
+      "t": 4001,
+      "ct": 3.68,
+      "buffer_s": 6.3,
+      "height": 720,
+      "dropped": 0,
+      "decoded": 116
+    },
+    {
+      "t": 5002,
+      "ct": 4.68,
+      "buffer_s": 5.3,
+      "height": 720,
+      "dropped": 0,
+      "decoded": 146
+    },
+    {
+      "t": 6000,
+      "ct": 5.68,
+      "buffer_s": 4.3,
+      "height": 720,
+      "dropped": 0,
+      "decoded": 176
+    },
+    {
+      "t": 7001,
+      "ct": 6.68,
+      "buffer_s": 3.3,
+      "height": 720,
+      "dropped": 0,
+      "decoded": 205
+    },
+    {
+      "t": 8001,
+      "ct": 7.68,
+      "buffer_s": 2.3,
+      "height": 720,
+      "dropped": 0,
+      "decoded": 236
+    },
+    {
+      "t": 9001,
+      "ct": 8.68,
+      "buffer_s": 1.3,
+      "height": 720,
+      "dropped": 0,
+      "decoded": 266
+    },
+    {
+      "t": 10001,
+      "ct": 9.68,
+      "buffer_s": 0.3,
+      "height": 720,
+      "dropped": 0,
+      "decoded": 294
+    },
+    {
+      "t": 11001,
+      "ct": 12.89,
+      "buffer_s": 16.97,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 326
+    },
+    {
+      "t": 12001,
+      "ct": 13.89,
+      "buffer_s": 15.97,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 355
+    },
+    {
+      "t": 13001,
+      "ct": 14.89,
+      "buffer_s": 14.97,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 385
+    },
+    {
+      "t": 14001,
+      "ct": 15.9,
+      "buffer_s": 13.96,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 416
+    },
+    {
+      "t": 15001,
+      "ct": 16.9,
+      "buffer_s": 12.96,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 446
+    },
+    {
+      "t": 16000,
+      "ct": 17.9,
+      "buffer_s": 11.96,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 476
+    },
+    {
+      "t": 17002,
+      "ct": 18.9,
+      "buffer_s": 10.96,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 506
+    },
+    {
+      "t": 18000,
+      "ct": 19.89,
+      "buffer_s": 9.96,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 536
+    },
+    {
+      "t": 19000,
+      "ct": 20.89,
+      "buffer_s": 8.97,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 566
+    },
+    {
+      "t": 20000,
+      "ct": 21.89,
+      "buffer_s": 7.97,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 596
+    },
+    {
+      "t": 21000,
+      "ct": 22.89,
+      "buffer_s": 6.97,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 626
+    },
+    {
+      "t": 22000,
+      "ct": 23.89,
+      "buffer_s": 5.97,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 656
+    },
+    {
+      "t": 23001,
+      "ct": 24.89,
+      "buffer_s": 4.96,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 686
+    },
+    {
+      "t": 24001,
+      "ct": 25.9,
+      "buffer_s": 3.96,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 716
+    },
+    {
+      "t": 25000,
+      "ct": 26.9,
+      "buffer_s": 2.96,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 746
+    },
+    {
+      "t": 26001,
+      "ct": 27.89,
+      "buffer_s": 1.96,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 776
+    },
+    {
+      "t": 27000,
+      "ct": 28.89,
+      "buffer_s": 0.97,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 806
+    },
+    {
+      "t": 28001,
+      "ct": 30.33,
+      "buffer_s": 9.58,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 926
+    },
+    {
+      "t": 29000,
+      "ct": 31.33,
+      "buffer_s": 18.53,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 956
+    },
+    {
+      "t": 30000,
+      "ct": 32.33,
+      "buffer_s": 17.53,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 986
+    },
+    {
+      "t": 31001,
+      "ct": 33.33,
+      "buffer_s": 16.53,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 1015
+    },
+    {
+      "t": 32000,
+      "ct": 34.33,
+      "buffer_s": 15.53,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 1046
+    },
+    {
+      "t": 33000,
+      "ct": 35.33,
+      "buffer_s": 14.53,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 1075
+    },
+    {
+      "t": 34000,
+      "ct": 36.33,
+      "buffer_s": 13.53,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 1106
+    },
+    {
+      "t": 35000,
+      "ct": 37.33,
+      "buffer_s": 12.53,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 1136
+    },
+    {
+      "t": 36000,
+      "ct": 38.33,
+      "buffer_s": 11.53,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 1166
+    },
+    {
+      "t": 37001,
+      "ct": 39.33,
+      "buffer_s": 10.53,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 1196
+    },
+    {
+      "t": 38000,
+      "ct": 40.33,
+      "buffer_s": 9.53,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 1226
+    },
+    {
+      "t": 39000,
+      "ct": 41.33,
+      "buffer_s": 18.54,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 1256
+    },
+    {
+      "t": 40000,
+      "ct": 42.33,
+      "buffer_s": 17.54,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 1286
+    },
+    {
+      "t": 41000,
+      "ct": 43.33,
+      "buffer_s": 16.54,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 1316
+    },
+    {
+      "t": 42000,
+      "ct": 44.33,
+      "buffer_s": 15.54,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 1345
+    },
+    {
+      "t": 43002,
+      "ct": 45.33,
+      "buffer_s": 14.54,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 1375
+    },
+    {
+      "t": 44000,
+      "ct": 46.33,
+      "buffer_s": 13.54,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 1405
+    },
+    {
+      "t": 45002,
+      "ct": 47.33,
+      "buffer_s": 12.54,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 1435
+    },
+    {
+      "t": 46000,
+      "ct": 48.33,
+      "buffer_s": 11.54,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 1465
+    },
+    {
+      "t": 47000,
+      "ct": 49.33,
+      "buffer_s": 10.54,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 1495
+    },
+    {
+      "t": 48000,
+      "ct": 50.33,
+      "buffer_s": 19.48,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 1525
+    },
+    {
+      "t": 49002,
+      "ct": 51.33,
+      "buffer_s": 18.48,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 1555
+    },
+    {
+      "t": 50001,
+      "ct": 52.33,
+      "buffer_s": 17.48,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 1585
+    },
+    {
+      "t": 51001,
+      "ct": 53.33,
+      "buffer_s": 16.48,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 1614
+    },
+    {
+      "t": 52000,
+      "ct": 54.33,
+      "buffer_s": 15.48,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 1645
+    },
+    {
+      "t": 53000,
+      "ct": 55.33,
+      "buffer_s": 14.48,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 1675
+    },
+    {
+      "t": 54000,
+      "ct": 56.33,
+      "buffer_s": 13.48,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 1705
+    },
+    {
+      "t": 55000,
+      "ct": 57.33,
+      "buffer_s": 12.48,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 1735
+    },
+    {
+      "t": 56001,
+      "ct": 58.33,
+      "buffer_s": 11.48,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 1765
+    },
+    {
+      "t": 57001,
+      "ct": 59.33,
+      "buffer_s": 10.48,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 1795
+    },
+    {
+      "t": 58000,
+      "ct": 60.33,
+      "buffer_s": 9.48,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 1825
+    },
+    {
+      "t": 59000,
+      "ct": 61.33,
+      "buffer_s": 18.49,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 1855
+    },
+    {
+      "t": 60001,
+      "ct": 62.33,
+      "buffer_s": 17.49,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 1885
+    }
+  ],
+  "error": null
+}
