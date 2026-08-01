@@ -23,13 +23,12 @@
   측정 대상인 라이브러리 계층을 거치지 않고, CDP가 없어 네트워크 제어·결함 주입 불가.
 
 ## 2026-08-01 (Task 4: 스트림 검증 게이트)
-- **Akamai HLS 라이브 URL 사용 불가 발견**: 1일차 검증 실행 시 hls_live (hls.js × Akamai)와 
+- **Akamai HLS 라이브 URL 2종 모두 세그먼트 레벨 404로 사망**: 1일차 검증 실행 시 hls_live (hls.js × Akamai)와 
   hls_live × Shaka 모두 404 실패. 설계서의 대체 URL(moctobpltc-i.akamaihd.net)로 재시도했으나 
-  동일한 404 발생. 두 Akamai 엔드포인트 모두 현재 세그먼트 레벨에서 접근 불가 상태.
-  **검증 결과**: 6/8 combos OK (VOD 4/4, DASH 라이브 2/2, HLS 라이브 0/2).
-  **다음 결정 필요**: 
-  1. 대체 HLS 라이브 스트림 소스 찾기 (DASH-IF, CDN 테스트 서비스 등)
-  2. 또는 HLS 라이브 검증 생략 허용 (아키텍처는 VOD로 증명 가능)
-  3. 또는 수동 테스트로 Akamai 엔드포인트 상태 재확인
+  동일한 404 발생. 두 Akamai 엔드포인트 모두 현재 세그먼트 요청 레벨에서 접근 불가 상태.
+  **해결책**: Unified Streaming 데모 HLS 라이브로 교체 (주: https://demo.unified-streaming.com/k8s/live/stable/live.isml/.m3u8, 
+  대체: https://demo.unified-streaming.com/k8s/live/stable/scte35.isml/.m3u8).
+  **최종 검증 결과**: **8/8 combos OK** — VOD 4/4, DASH 라이브 2/2, HLS 라이브 2/2 (Unified Streaming에서 모두 통과).
+  일차 리스크 게이트 완료: Shaka HLS 재생 가능 확인, 4종 스트림 모두 playable 확인.
 
 ## (이후 결정을 날짜별로 추가)

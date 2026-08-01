@@ -14,8 +14,8 @@ export const STREAMS: StreamDef[] = [
   },
   {
     id: 'hls_live', proto: 'hls', live: true,
-    url: 'https://moctobpltc-i.akamaihd.net/hls/live/571329/eight/playlist.m3u8',
-    note: 'Akamai 테스트 라이브. 대체: https://moctobpltc-i.akamaihd.net/hls/live/571329/eight/playlist.m3u8',
+    url: 'https://demo.unified-streaming.com/k8s/live/stable/live.isml/.m3u8',
+    note: 'Unified Streaming 데모 라이브 (Akamai 라이브 2종이 세그먼트 404로 사망해 교체). 대체: https://demo.unified-streaming.com/k8s/live/stable/scte35.isml/.m3u8',
   },
   {
     id: 'dash_live', proto: 'dash', live: true,
