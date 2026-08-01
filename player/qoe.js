@@ -3,11 +3,27 @@ window.__qoe = (() => {
     t0: null, meta: {}, timeline: [], samples: [], rebuffers: [],
     metadataAt: null, firstFrameAt: null, stall: null,
     error: null, done: false, observeMs: 60000,
+    samplerId: null, timeoutId: null, endedAt: null,
   };
   const now = () => performance.now();
   const rel = t => Math.round(t - S.t0);
   const ev = (type, detail) => S.timeline.push(
     detail === undefined ? { t: rel(now()), type } : { t: rel(now()), type, detail });
+
+  function shutdown(reason) {
+    if (S.done) return; // idempotent: second call is a no-op
+    if (S.samplerId !== null) { clearInterval(S.samplerId); S.samplerId = null; }
+    if (S.timeoutId !== null) { clearTimeout(S.timeoutId); S.timeoutId = null; }
+    if (S.stall) {
+      const dur = now() - S.stall.start;
+      S.rebuffers.push(dur);
+      ev('stall_close_on_' + reason, Math.round(dur));
+      S.stall = null;
+    }
+    S.endedAt = now();
+    ev(reason === 'fatal' ? 'fatal' : 'observe_end');
+    S.done = true;
+  }
 
   function start(video, observeMs) {
     performance.setResourceTimingBufferSize(20000);
@@ -36,13 +52,16 @@ window.__qoe = (() => {
     video.addEventListener('timeupdate', resume);
 
     video.addEventListener('error', () => {
-      S.error = video.error ? 'MediaError code=' + video.error.code : 'media error';
+      if (S.error === null) {
+        S.error = video.error ? 'MediaError code=' + video.error.code : 'media error';
+      }
       ev('media_error', S.error);
+      shutdown('fatal');
     });
 
     video.requestVideoFrameCallback(() => { S.firstFrameAt = now(); ev('first_frame'); });
 
-    const sampler = setInterval(() => {
+    S.samplerId = setInterval(() => {
       let buf = 0;
       for (let i = 0; i < video.buffered.length; i++) {
         if (video.buffered.start(i) <= video.currentTime &&
@@ -61,16 +80,8 @@ window.__qoe = (() => {
       });
     }, 1000);
 
-    setTimeout(() => {
-      clearInterval(sampler);
-      if (S.stall) {
-        const dur = now() - S.stall.start;
-        S.rebuffers.push(dur);
-        ev('stall_open_at_end', Math.round(dur));
-        S.stall = null;
-      }
-      ev('observe_end');
-      S.done = true;
+    S.timeoutId = setTimeout(() => {
+      shutdown('timeout');
     }, observeMs);
   }
 
@@ -79,9 +90,11 @@ window.__qoe = (() => {
   function onSwitch(sw) { ev('quality_switch', sw); }
   function fail(msg) {
     if (S.t0 === null) S.t0 = now();
-    S.error = String(msg);
+    if (S.error === null) {
+      S.error = String(msg);
+    }
     ev('fatal', S.error);
-    S.done = true;
+    shutdown('fatal');
   }
 
   function firstEntryMs(pathRegex) {
@@ -97,7 +110,7 @@ window.__qoe = (() => {
     const metadata = S.metadataAt === null ? null : Math.round(S.metadataAt - S.t0);
     const firstFrame = S.firstFrameAt === null ? null : Math.round(S.firstFrameAt - S.t0);
     const stallTime = Math.round(S.rebuffers.reduce((a, b) => a + b, 0));
-    const playWindow = S.firstFrameAt === null ? null : S.observeMs - (S.firstFrameAt - S.t0);
+    const playWindow = S.firstFrameAt === null ? null : Math.round((S.endedAt ?? now()) - S.firstFrameAt);
     const last = S.samples[S.samples.length - 1];
 
     const post = S.samples.filter(s => firstFrame !== null && s.t >= firstFrame && s.height > 0);
@@ -128,7 +141,7 @@ window.__qoe = (() => {
         },
         rebuffer_count: S.rebuffers.length,
         rebuffer_time_ms: stallTime,
-        rebuffer_ratio: playWindow ? Math.round((stallTime / playWindow) * 10000) / 10000 : null,
+        rebuffer_ratio: playWindow && playWindow > 0 ? Math.round((stallTime / playWindow) * 10000) / 10000 : null,
         dropped_ratio: last && last.decoded > 0
           ? Math.round((last.dropped / last.decoded) * 10000) / 10000 : null,
         time_weighted_height: twh,
