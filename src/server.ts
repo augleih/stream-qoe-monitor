@@ -21,9 +21,12 @@ export function startServer(root: string, port = 0): Promise<{ url: string; clos
       res.writeHead(404); res.end();
     }
   });
-  return new Promise(ok => srv.listen(port, () => {
-    const addr = srv.address();
-    if (addr === null || typeof addr === 'string') throw new Error('no port');
-    ok({ url: `http://localhost:${addr.port}`, close: () => srv.close() });
-  }));
+  return new Promise((ok, err) => {
+    srv.on('error', err);
+    srv.listen(port, () => {
+      const addr = srv.address();
+      if (addr === null || typeof addr === 'string') throw new Error('no port');
+      ok({ url: `http://localhost:${addr.port}`, close: () => srv.close() });
+    });
+  });
 }
