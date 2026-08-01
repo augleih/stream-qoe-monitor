@@ -14,7 +14,7 @@ export const STREAMS: StreamDef[] = [
   },
   {
     id: 'hls_live', proto: 'hls', live: true,
-    url: 'https://cph-p2p-msl.akamaized.net/hls/live/2000341/test/master.m3u8',
+    url: 'https://moctobpltc-i.akamaihd.net/hls/live/571329/eight/playlist.m3u8',
     note: 'Akamai 테스트 라이브. 대체: https://moctobpltc-i.akamaihd.net/hls/live/571329/eight/playlist.m3u8',
   },
   {
