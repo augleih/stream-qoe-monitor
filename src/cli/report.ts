@@ -13,5 +13,14 @@ console.log(`loaded ${results.length} results`);
 const rows = aggregate(results);
 await mkdir('report', { recursive: true });
 await writeFile('report/summary.json', JSON.stringify(rows, null, 2));
-await writeFile('report/summary.md', renderTables(rows) + renderScenarios(results));
+
+// Build summary.md with optional observations
+let summaryContent = renderTables(rows) + renderScenarios(results);
+try {
+  const observations = await readFile('report/observations.md', 'utf8');
+  summaryContent += '\n' + observations;
+} catch {
+  // observations.md doesn't exist, continue without it
+}
+await writeFile('report/summary.md', summaryContent);
 console.log('wrote report/summary.json, report/summary.md');
