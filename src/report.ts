@@ -1,4 +1,4 @@
-import { abrReactionMs, overshoots, recovered } from './aggregate.js';
+import { aggregateScenarios } from './aggregate.js';
 import type { AggRow } from './aggregate.js';
 import type { RunResult } from './types.js';
 
@@ -19,15 +19,16 @@ export function renderTables(rows: AggRow[]): string {
 }
 
 export function renderScenarios(results: RunResult[]): string {
-  const rows = results.filter(r => r.scenario !== null);
+  const rows = aggregateScenarios(results);
   if (rows.length === 0) return '';
-  let md = '\n## 결함·조건 변화 시나리오 결과\n\n';
-  md += '| scenario | stream | player | 회복 | ABR 반응 | 오버슈트 | rebuffer 수 | rebuffer 시간 | 에러 |\n|---|---|---|---|---|---|---|---|---|\n';
+  const fmtMs = (v: number | null) => (v === null ? '—' : `${v}ms`);
+  let md = '\n## 결함·조건 변화 시나리오 결과 (반복 집계)\n\n';
+  md += '트리거는 재생 위치 기준 (프로토콜 간 공정). 회복 = 주입 후 currentTime 3초 초과 전진. ' +
+    '미주입=결함이 발동하지 않은 무효 런.\n\n';
+  md += '| scenario | stream | player | network | n | 회복 | 트리거실패 | 미주입 | ABR 반응(중앙값) | rebuffer 수(중앙값) | rebuffer 시간(중앙값) | 에러 |\n';
+  md += '|---|---|---|---|---|---|---|---|---|---|---|---|\n';
   for (const r of rows) {
-    const rec = recovered(r);
-    const abr = abrReactionMs(r);
-    const err = r.error === null ? '—' : r.error.replace(/\s*\n\s*/g, ' ').slice(0, 120);
-    md += `| ${r.scenario} | ${r.streamId} | ${r.player} | ${rec === null ? '—' : rec ? 'O' : 'X'} | ${abr === null ? '—' : `${abr}ms`} | ${overshoots(r)} | ${r.metrics.rebuffer_count} | ${r.metrics.rebuffer_time_ms}ms | ${err} |\n`;
+    md += `| ${r.scenario} | ${r.streamId} | ${r.player} | ${r.network} | ${r.n} | ${r.recovered_n}/${r.injected_n} | ${r.timeout_n} | ${r.not_injected_n} | ${fmtMs(r.abr_median)} | ${r.rebuffer_count_median ?? '—'} | ${fmtMs(r.rebuffer_time_median)} | ${r.error_n} |\n`;
   }
   return md;
 }

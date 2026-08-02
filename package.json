@@ -9,6 +9,7 @@
     "validate-streams": "tsx src/cli/validate-streams.ts",
     "matrix": "tsx src/cli/matrix.ts",
     "scenario": "tsx src/cli/scenario.ts",
+    "scenario-batch": "tsx src/cli/scenario-batch.ts",
     "report": "tsx src/cli/report.ts",
     "test": "vitest run",
     "typecheck": "tsc"

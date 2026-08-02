@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { aggregate, recovered, abrReactionMs, overshoots } from '../src/aggregate.js';
+import { aggregate, aggregateScenarios, recovered, abrReactionMs, overshoots } from '../src/aggregate.js';
 import type { RunResult } from '../src/types.js';
 
 function makeResult(over: Partial<RunResult> & { startup?: number | null }): RunResult {
@@ -109,6 +109,76 @@ describe('abrReactionMs', () => {
     const r = makeResult({});
     r.timeline = [{ t: 30000, type: 'mark', detail: 'bw_drop_600k' }];
     expect(abrReactionMs(r)).toBe(null);
+  });
+});
+
+describe('aggregateScenarios', () => {
+  function scenResult(over: Partial<RunResult> & { startup?: number | null }): RunResult {
+    const r = makeResult(over);
+    return { ...r, scenario: over.scenario ?? 'seg_404' };
+  }
+  it('scenario|stream|player|network 그룹으로 n·회복 수를 센다', () => {
+    const a = scenResult({ rep: 1, runId: 'a' });
+    a.timeline = [{ t: 15000, type: 'mark', detail: 'seg_404_injected' }];
+    a.samples = [
+      { t: 14000, ct: 13, buffer_s: 5, height: 720, dropped: 0, decoded: 100 },
+      { t: 59000, ct: 55, buffer_s: 5, height: 720, dropped: 0, decoded: 200 },
+    ];
+    const b = scenResult({ rep: 2, runId: 'b' });
+    b.timeline = [{ t: 15000, type: 'mark', detail: 'seg_404_injected' }];
+    b.samples = [
+      { t: 14000, ct: 13, buffer_s: 5, height: 720, dropped: 0, decoded: 100 },
+      { t: 59000, ct: 13.4, buffer_s: 0, height: 720, dropped: 0, decoded: 100 },
+    ];
+    const rows = aggregateScenarios([a, b]);
+    expect(rows).toHaveLength(1);
+    expect(rows[0].n).toBe(2);
+    expect(rows[0].injected_n).toBe(2);
+    expect(rows[0].recovered_n).toBe(1);
+  });
+  it('trigger_timeout 마크는 timeout_n으로 별도 집계된다', () => {
+    const a = scenResult({ rep: 1, runId: 'a' });
+    a.timeline = [{ t: 55000, type: 'mark', detail: 'trigger_timeout' }];
+    const rows = aggregateScenarios([a]);
+    expect(rows[0].timeout_n).toBe(1);
+    expect(rows[0].injected_n).toBe(0);
+    expect(rows[0].not_injected_n).toBe(0);
+  });
+  it('마크가 전혀 없는 armed-but-unfired 런은 not_injected_n으로 집계되고 회복/중앙값 계산에서 제외된다', () => {
+    // 재생 위치는 도달했으나(trigger_timeout 없음) 결함을 유발할 요청이 한 번도 오지 않은 경우 —
+    // 컨트롤러 어멘드먼트: 이걸 "회복"으로 잘못 세면 phase-1 manifest_fail 오독이 재발한다.
+    const a = scenResult({ rep: 1, runId: 'a' });
+    a.timeline = []; // no marks at all
+    const b = scenResult({ rep: 2, runId: 'b' });
+    b.timeline = [{ t: 15000, type: 'mark', detail: 'seg_404_injected' }];
+    b.samples = [
+      { t: 14000, ct: 13, buffer_s: 5, height: 720, dropped: 0, decoded: 100 },
+      { t: 59000, ct: 55, buffer_s: 5, height: 720, dropped: 0, decoded: 200 },
+    ];
+    const rows = aggregateScenarios([a, b]);
+    expect(rows).toHaveLength(1);
+    expect(rows[0].n).toBe(2);
+    expect(rows[0].not_injected_n).toBe(1);
+    expect(rows[0].injected_n).toBe(1);
+    expect(rows[0].timeout_n).toBe(0);
+    // recovered/rebuffer 중앙값은 injected(b)만 반영 — a는 완전히 배제
+    expect(rows[0].recovered_n).toBe(1);
+    expect(rows[0].rebuffer_count_median).toBe(b.metrics.rebuffer_count);
+  });
+  it('abr 반응 중앙값은 mark 이후 첫 전환 지연들의 중앙값이다', () => {
+    const mk = (id: string, delay: number) => {
+      const r = scenResult({ rep: 1, runId: id, scenario: 'bw_drop' });
+      r.timeline = [
+        { t: 20000, type: 'mark', detail: 'bw_drop_600k' },
+        { t: 20000 + delay, type: 'quality_switch', detail: { height: 234 } },
+      ];
+      return r;
+    };
+    const rows = aggregateScenarios([mk('x', 3000), mk('y', 5000), mk('z', 1000)]);
+    expect(rows[0].abr_median).toBe(3000);
+  });
+  it('베이스라인(scenario null) 런은 무시한다', () => {
+    expect(aggregateScenarios([makeResult({ rep: 1 })])).toHaveLength(0);
   });
 });
 
