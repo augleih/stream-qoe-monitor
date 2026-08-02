@@ -56,6 +56,9 @@ npm run report
 전부 발생) — startup과 화질을 맞바꾼 전형적인 트레이드오프다. 같은 표의
 unlimited 행에서 hlsjs는 중앙값 255ms인데 P95는 2253ms로 9배 뛴다 —
 평균이 아니라 중앙값+P95를 같이 봐야 하는 이유가 이 한 줄에 있다.
+(예외: mbps1_5 행은 hlsjs의 rebuffer ratio(0.0133)가 kbps600(0)보다 오히려
+높다 — 대역폭 절벽 부근에서 화질을 올렸다 내렸다 하는 ABR 진동으로 해석한다.
+자세한 내용: [report/observations.md](report/observations.md).)
 
 | network | player | n(실패) | startup 중앙값 | startup P95 | rebuffer ratio | rebuffer 세션% | 드롭률 | 시간가중 해상도 |
 |---|---|---|---|---|---|---|---|---|
@@ -73,7 +76,7 @@ unlimited 행에서 hlsjs는 중앙값 255ms인데 P95는 2253ms로 9배 뛴다 
 0.0371, shaka 12608ms/0.0805로, 화질은 둘 다 그대로인 채 startup과
 rebuffer가 **둘 다** shaka 쪽이 나쁘다. 맞바꿀 화질 레버가 없으므로
 이건 트레이드오프가 아니라 두 라이브러리의 초기 버퍼링·재생 정책 차이로
-읽는다([검증 계획 §6](docs/verification-plan.md#6-결과-해석-원칙)의
+읽는다([검증 계획](docs/verification-plan.md) §6 "결과 해석 원칙"의
 "startup 느림 + rebuffering 많음 → 둘 다 나쁨" 케이스).
 
 전체 24행 표·12개 차트·시나리오 결과: [report/summary.md](report/summary.md)
