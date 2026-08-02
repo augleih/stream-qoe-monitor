@@ -46,6 +46,32 @@
 | unlimited | hlsjs | 5(0) | 255ms | 2253ms | 0 | 0% | 0 | 1037p |
 | unlimited | shaka | 5(0) | 288ms | 1834ms | 0.0011 | 100% | 0 | 1019p |
 
+## 차트
+
+![startup dash_live_kbps600](charts/startup_dash_live_kbps600.svg)
+
+![startup dash_live_mbps1_5](charts/startup_dash_live_mbps1_5.svg)
+
+![startup dash_live_unlimited](charts/startup_dash_live_unlimited.svg)
+
+![startup dash_vod_kbps600](charts/startup_dash_vod_kbps600.svg)
+
+![startup dash_vod_mbps1_5](charts/startup_dash_vod_mbps1_5.svg)
+
+![startup dash_vod_unlimited](charts/startup_dash_vod_unlimited.svg)
+
+![startup hls_live_kbps600](charts/startup_hls_live_kbps600.svg)
+
+![startup hls_live_mbps1_5](charts/startup_hls_live_mbps1_5.svg)
+
+![startup hls_live_unlimited](charts/startup_hls_live_unlimited.svg)
+
+![startup hls_vod_kbps600](charts/startup_hls_vod_kbps600.svg)
+
+![startup hls_vod_mbps1_5](charts/startup_hls_vod_mbps1_5.svg)
+
+![startup hls_vod_unlimited](charts/startup_hls_vod_unlimited.svg)
+
 ## 결함·조건 변화 시나리오 결과
 
 | scenario | stream | player | 회복 | ABR 반응 | 오버슈트 | rebuffer 수 | rebuffer 시간 | 에러 |

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="112" font-family="sans-serif">
+<text x="16" y="24" font-size="14" font-weight="bold">startup ms — hls_live_mbps1_5 (중앙값/P95)</text>
+<text x="162" y="54" text-anchor="end" font-size="12">hlsjs</text>
+<rect x="170" y="40" width="170.6" height="18" fill="#cbd5e1"/>
+<rect x="170" y="40" width="152.0" height="18" fill="#2563eb"/>
+<text x="344.58626465661644" y="54" font-size="11">2626 / P95 2948</text>
+<text x="162" y="82" text-anchor="end" font-size="12">shaka</text>
+<rect x="170" y="68" width="380.0" height="18" fill="#cbd5e1"/>
+<rect x="170" y="68" width="366.4" height="18" fill="#2563eb"/>
+<text x="554" y="82" font-size="11">6332 / P95 6567</text>
+</svg>
