@@ -4,4 +4,4 @@
 
 **세그먼트 단위 결함 주입의 측정 한계:** DASH 세그먼트는 HLS보다 짧아(≈2s vs ≈6-10s), 8번째 세그먼트 요청 기준 결함(seg_404, seg_delay)이 재생 시작 직후 t<1000ms에 발동된다. 이로 인해 recovered() 판정 기준인 "마지막 mark 이전의 샘플"이 존재하지 않아 null이 반환된다. 실제로는 ABR 반응이 발생했으나(예: seg_404|dash_vod|dashjs ABR 반응 112ms) recovered 값이 null인 것은 **측정 맹점**이지 플레이어 실패가 아님. HLS와 DASH의 세그먼트 타이밍 차이를 결과 해석 시 고려할 것.
 
-**manifest 갱신 주기와 시나리오 창:** manifest_fail|dash_live|dashjs는 60초 관찰 창에서 manifest_abort 표지가 0개였고, 120초 창에서도 동일. dash.js의 MPD 갱신 주기가 60-120초 관찰 창보다 길어 결함이 주입되지 않음. 따라서 이 조합의 시나리오 결과는 실제 manifest 처리 동작을 반영하지 않는 무효 데이터임을 명시한다.
+**manifest 갱신 주기와 시나리오 창:** manifest_fail|dash_live|dashjs는 60초 관찰 창에서 manifest_abort 표지가 0개였고, 120초 창에서도 동일. 결함이 주입되지 않은 원인은 미확인(추정: 관찰 창 내 MPD 재요청이 라우트에 잡히지 않음 — 갱신 주기 또는 캐시 동작으로 추정). 따라서 이 조합의 시나리오 결과는 실제 manifest 처리 동작을 반영하지 않는 무효 데이터임을 명시한다.
