@@ -3,7 +3,7 @@
 <text x="162" y="54" text-anchor="end" font-size="12">hlsjs</text>
 <rect x="170" y="40" width="380.0" height="18" fill="#cbd5e1"/>
 <rect x="170" y="40" width="43.0" height="18" fill="#2563eb"/>
-<text x="554" y="54" font-size="11">255 / P95 2253</text>
+<text x="546" y="54" font-size="11" text-anchor="end" fill="#334155">255 / P95 2253</text>
 <text x="162" y="82" text-anchor="end" font-size="12">shaka</text>
 <rect x="170" y="68" width="309.3" height="18" fill="#cbd5e1"/>
 <rect x="170" y="68" width="48.6" height="18" fill="#2563eb"/>

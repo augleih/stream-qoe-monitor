@@ -16,9 +16,11 @@
 
 ## breakdown (구간별 소요시간)
 
-`startup_ms`의 내역을 4구간으로 쪼갠 값. `manifest_loaded_ms`와 `first_segment_ms`
-사이(`to_first_segment`), 그 다음 `metadata_ms`까지(`to_metadata`), 마지막으로
-`first_frame_ms`까지(`to_first_frame`) — 이전 구간이 `null`이면 뒤도 `null`이다.
+`startup_ms`의 내역을 4구간으로 쪼갠 값. t0부터 `manifest_loaded_ms`까지(`manifest`),
+그 다음 `first_segment_ms`까지(`to_first_segment`), 그 다음 `metadata_ms`까지
+(`to_metadata`), 마지막으로 `first_frame_ms`까지(`to_first_frame`) — 각 구간은
+자신의 양 끝 지표가 모두 있을 때만 계산되며, 하나라도 null이면 해당 구간만
+null이 된다 (앞 구간의 null이 뒤 구간으로 전파되지는 않는다).
 "startup이 느리다"는 한 숫자가 아니라 어느 구간이 느린지 짚기 위한 값.
 
 ## 라이브러리별 이벤트 매핑 (quality_switch)
