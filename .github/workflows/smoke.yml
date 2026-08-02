@@ -1,0 +1,23 @@
+name: smoke
+on:
+  push:
+  schedule:
+    - cron: '0 21 * * *'   # 매일 06:00 KST — 지속 QoE 모니터링 (포지셔닝 근거)
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+      - run: npx playwright install --with-deps chrome
+      - run: npm test
+      - run: npm run typecheck
+      - run: npm run measure -- --player hlsjs --stream hls_vod --observe 30000 --rep 0
+      - uses: actions/upload-artifact@v4
+        with:
+          name: smoke-result
+          path: results/
