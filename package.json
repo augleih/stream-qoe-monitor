@@ -1,6 +1,7 @@
 {
   "name": "stream-qoe-monitor",
   "private": true,
+  "license": "MIT",
   "type": "module",
   "scripts": {
     "serve": "tsx src/cli/serve.ts",
