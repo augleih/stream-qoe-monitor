@@ -1,0 +1,111 @@
+{
+  "runId": "dash_live_shaka_unlimited_manifest_fail_r1",
+  "player": "shaka",
+  "streamId": "dash_live",
+  "streamUrl": "https://livesim2.dashif.org/livesim2/testpic_2s/Manifest.mpd",
+  "network": "unlimited",
+  "rep": 1,
+  "scenario": "manifest_fail",
+  "startedAt": "2026-08-02T00:08:09.036Z",
+  "libVersion": "v5.2.4",
+  "observeMs": 60000,
+  "metrics": {
+    "manifest_loaded_ms": 849,
+    "first_segment_ms": 1203,
+    "metadata_ms": 1479,
+    "first_frame_ms": 2090,
+    "startup_ms": 2090,
+    "breakdown": {
+      "manifest": 849,
+      "to_first_segment": 354,
+      "to_metadata": 276,
+      "to_first_frame": 611
+    },
+    "rebuffer_count": 1,
+    "rebuffer_time_ms": 140,
+    "rebuffer_ratio": 0.107,
+    "dropped_ratio": 0,
+    "time_weighted_height": null
+  },
+  "timeline": [
+    {
+      "t": 0,
+      "type": "t0"
+    },
+    {
+      "t": 926,
+      "type": "quality_switch",
+      "detail": {
+        "height": 360,
+        "bitrate": 348000
+      }
+    },
+    {
+      "t": 931,
+      "type": "waiting_initial"
+    },
+    {
+      "t": 1479,
+      "type": "loadedmetadata"
+    },
+    {
+      "t": 2091,
+      "type": "first_frame"
+    },
+    {
+      "t": 2718,
+      "type": "mark",
+      "detail": "manifest_abort_2"
+    },
+    {
+      "t": 2886,
+      "type": "stall_start"
+    },
+    {
+      "t": 3026,
+      "type": "stall_end",
+      "detail": 140
+    },
+    {
+      "t": 3396,
+      "type": "mark",
+      "detail": "manifest_abort_3"
+    },
+    {
+      "t": 3399,
+      "type": "fatal",
+      "detail": "shaka error: code=1002"
+    },
+    {
+      "t": 3399,
+      "type": "fatal"
+    }
+  ],
+  "samples": [
+    {
+      "t": 1003,
+      "ct": 0,
+      "buffer_s": 0,
+      "height": 0,
+      "dropped": 0,
+      "decoded": 0
+    },
+    {
+      "t": 2002,
+      "ct": 1785629285.22,
+      "buffer_s": 0,
+      "height": 360,
+      "dropped": 0,
+      "decoded": 0
+    },
+    {
+      "t": 3002,
+      "ct": 1785629285.96,
+      "buffer_s": 0.05,
+      "height": 360,
+      "dropped": 0,
+      "decoded": 32
+    }
+  ],
+  "error": "shaka error: code=1002"
+}
