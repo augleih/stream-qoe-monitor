@@ -18,6 +18,7 @@ jobs:
       - run: npm run typecheck
       - run: npm run measure -- --player hlsjs --stream hls_vod --observe 30000 --rep 0
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: smoke-result
           path: results/
