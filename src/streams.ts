@@ -14,12 +14,12 @@ export const STREAMS: StreamDef[] = [
   },
   {
     id: 'hls_live', proto: 'hls', live: true,
-    url: 'https://demo.unified-streaming.com/k8s/live/stable/live.isml/.m3u8',
-    note: 'Unified Streaming 데모 라이브 (Akamai 라이브 2종이 세그먼트 404로 사망해 교체). 대체: https://demo.unified-streaming.com/k8s/live/stable/scte35.isml/.m3u8',
+    url: 'https://rdmedia.bbc.co.uk/testcard/simulcast/manifests/avc-full.m3u8',
+    note: 'BBC R&D 테스트카드 시뮬캐스트, 9단계 래더(108p~1080p), fMP4 3.84s. 301→akamaized. 대체(직결): https://vs-hls-ww-rd-live.akamaized.net/pl/testcard2020/avc-full.m3u8',
   },
   {
     id: 'dash_live', proto: 'dash', live: true,
-    url: 'https://livesim2.dashif.org/livesim2/testpic_2s/Manifest.mpd',
-    note: 'DASH-IF livesim2 상시 시뮬레이터 (설계서의 Akamai 대신 선정 — 안정성). 대체: https://livesim2.dashif.org/livesim2/testpic_6s/Manifest.mpd (동일 호스트의 다른 자산 — 호스트 전체 장애 시에는 스트림 교체 필요)',
+    url: 'https://rdmedia.bbc.co.uk/testcard/simulcast/manifests/avc-full.mpd',
+    note: 'BBC R&D 테스트카드 시뮬캐스트 DASH, 동일 래더. 대체(직결): https://vs-dash-ww-rd-live.akamaized.net/pl/testcard2020/avc-full.mpd',
   },
 ];
