@@ -1,8 +1,8 @@
 window.__players = {
   hlsjs: {
     version: () => Hls.version,
-    load(video, src, onSwitch) {
-      const hls = new Hls();
+    load(video, src, onSwitch, cmcd) {
+      const hls = new Hls(cmcd ? { cmcd: { sessionId: cmcd.sessionId, contentId: cmcd.contentId } } : {});
       hls.on(Hls.Events.LEVEL_SWITCHED, (e, data) => {
         const lvl = hls.levels[data.level];
         onSwitch({ height: lvl ? lvl.height : null, bitrate: lvl ? lvl.bitrate : null });
@@ -17,8 +17,11 @@ window.__players = {
 
   dashjs: {
     version: () => dashjs.Version,
-    load(video, src, onSwitch) {
+    load(video, src, onSwitch, cmcd) {
       const p = dashjs.MediaPlayer().create();
+      if (cmcd) {
+        p.updateSettings({ streaming: { cmcd: { enabled: true, sid: cmcd.sessionId, cid: cmcd.contentId, mode: 'query' } } });
+      }
       p.on(dashjs.MediaPlayer.events.QUALITY_CHANGE_RENDERED, e => {
         // v5: e.newRepresentation / v4: e.newQuality(인덱스) — 둘 다 대응
         const rep = e.newRepresentation;
@@ -35,10 +38,13 @@ window.__players = {
 
   shaka: {
     version: () => shaka.Player.version,
-    async load(video, src, onSwitch) {
+    async load(video, src, onSwitch, cmcd) {
       shaka.polyfill.installAll();
       const p = new shaka.Player();
       await p.attach(video);
+      if (cmcd) {
+        p.configure({ cmcd: { enabled: true, sessionId: cmcd.sessionId, contentId: cmcd.contentId, useHeaders: false } });
+      }
       p.addEventListener('adaptation', () => {
         const active = p.getVariantTracks().find(t => t.active);
         onSwitch(active

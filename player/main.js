@@ -11,8 +11,11 @@
   }
   window.__qoe.setMeta({ player: playerName, libVersion: adapter.version() });
   window.__qoe.start(video, observeMs);
+  const cmcdOpts = q.get('cmcd') === '1'
+    ? { sessionId: (crypto.randomUUID ? crypto.randomUUID() : String(Date.now())), contentId: src.slice(-64) }
+    : null;
   try {
-    await adapter.load(video, src, sw => window.__qoe.onSwitch(sw));
+    await adapter.load(video, src, sw => window.__qoe.onSwitch(sw), cmcdOpts);
     await video.play().catch(() => {});
   } catch (err) {
     window.__qoe.fail(String(err));

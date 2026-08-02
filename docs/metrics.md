@@ -45,3 +45,12 @@ null이 된다 (앞 구간의 null이 뒤 구간으로 전파되지는 않는다
   `rebuffer ratio`(회차 중앙값)와 `rebuffer 세션%`(끊김이 1회라도 발생한 회차 비율)를
   나란히 보는 것은 이 편차를 감추지 않기 위함이다 — ratio 중앙값이 0이어도
   세션%가 0이 아닐 수 있다
+
+## CMCD (Common Media Client Data, CTA-5004)
+
+`&cmcd=1` 쿼리 파라미터로 활성화되는 opt-in 기능. 활성화 시 media request URL의 query
+parameter에 클라이언트 측정 데이터(`CMCD` query param으로 인코딩)를 포함시키며, CDN 로그와
+클라이언트 지표를 연결하는 업계 표준(CTA-5004). 세 플레이어 모두 query-mode로 구현
+(header-mode 제외, Resource Timing으로 검증 가능). **기본값은 off** — 기존 120회 베이스라인
+데이터셋(Task 1-10 결과)과의 일관성을 유지하기 위해 opt-in으로 설계. 성능 임팩트 평가와
+CDN 연계 분석이 필요한 경우에만 활성화.
