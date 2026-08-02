@@ -109,6 +109,7 @@ export interface ScenAggRow {
   recovered_n: number;
   error_n: number;
   abr_median: number | null;             // injected 중
+  overshoot_median: number | null;       // injected 중
   rebuffer_count_median: number | null;  // injected 중
   rebuffer_time_median: number | null;   // injected 중
 }
@@ -145,6 +146,7 @@ export function aggregateScenarios(results: RunResult[]): ScenAggRow[] {
       recovered_n: injected.filter(r => recovered(r) === true).length,
       error_n: rs.filter(r => r.error !== null).length,
       abr_median: abrs.length ? median(abrs) : null,
+      overshoot_median: injected.length ? median(injected.map(r => overshoots(r))) : null,
       rebuffer_count_median: injected.length ? median(injected.map(r => r.metrics.rebuffer_count)) : null,
       rebuffer_time_median: injected.length ? median(injected.map(r => r.metrics.rebuffer_time_ms)) : null,
     });

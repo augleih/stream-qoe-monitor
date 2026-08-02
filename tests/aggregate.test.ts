@@ -177,6 +177,38 @@ describe('aggregateScenarios', () => {
     const rows = aggregateScenarios([mk('x', 3000), mk('y', 5000), mk('z', 1000)]);
     expect(rows[0].abr_median).toBe(3000);
   });
+  it('오버슈트 중앙값은 injected 런들의 overshoots() 값의 중앙값이다', () => {
+    const mk = (id: string, switches: Array<{ t: number; height: number }>) => {
+      const r = scenResult({ rep: 1, runId: id, scenario: 'bw_drop' });
+      r.timeline = [
+        { t: 0, type: 'mark', detail: 'bw_drop_600k' },
+        ...switches.map(s => ({ t: s.t, type: 'quality_switch', detail: { height: s.height } })),
+      ];
+      return r;
+    };
+    // overshoots()=1: 상향 후 5초 만에 하향
+    const one = mk('one', [
+      { t: 5000, height: 234 },
+      { t: 10000, height: 720 },
+      { t: 15000, height: 234 },
+    ]);
+    // overshoots()=0: 상향 후 15초 뒤에야 하향 (10초 창을 벗어남)
+    const zero = mk('zero', [
+      { t: 5000, height: 234 },
+      { t: 10000, height: 720 },
+      { t: 25000, height: 234 },
+    ]);
+    // overshoots()=2: 상향→하향 쌍이 두 번
+    const two = mk('two', [
+      { t: 0, height: 234 },
+      { t: 5000, height: 720 },
+      { t: 10000, height: 234 },
+      { t: 15000, height: 720 },
+      { t: 20000, height: 234 },
+    ]);
+    const rows = aggregateScenarios([one, zero, two]);
+    expect(rows[0].overshoot_median).toBe(1);
+  });
   it('베이스라인(scenario null) 런은 무시한다', () => {
     expect(aggregateScenarios([makeResult({ rep: 1 })])).toHaveLength(0);
   });

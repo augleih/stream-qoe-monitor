@@ -25,10 +25,10 @@ export function renderScenarios(results: RunResult[]): string {
   let md = '\n## 결함·조건 변화 시나리오 결과 (반복 집계)\n\n';
   md += '트리거는 재생 위치 기준 (프로토콜 간 공정). 회복 = 주입 후 currentTime 3초 초과 전진. ' +
     '미주입=결함이 발동하지 않은 무효 런.\n\n';
-  md += '| scenario | stream | player | network | n | 회복 | 트리거실패 | 미주입 | ABR 반응(중앙값) | rebuffer 수(중앙값) | rebuffer 시간(중앙값) | 에러 |\n';
-  md += '|---|---|---|---|---|---|---|---|---|---|---|---|\n';
+  md += '| scenario | stream | player | network | n | 회복 | 트리거실패 | 미주입 | ABR 반응(중앙값) | 오버슈트(중앙값) | rebuffer 수(중앙값) | rebuffer 시간(중앙값) | 에러 |\n';
+  md += '|---|---|---|---|---|---|---|---|---|---|---|---|---|\n';
   for (const r of rows) {
-    md += `| ${r.scenario} | ${r.streamId} | ${r.player} | ${r.network} | ${r.n} | ${r.recovered_n}/${r.injected_n} | ${r.timeout_n} | ${r.not_injected_n} | ${fmtMs(r.abr_median)} | ${r.rebuffer_count_median ?? '—'} | ${fmtMs(r.rebuffer_time_median)} | ${r.error_n} |\n`;
+    md += `| ${r.scenario} | ${r.streamId} | ${r.player} | ${r.network} | ${r.n} | ${r.recovered_n}/${r.injected_n} | ${r.timeout_n} | ${r.not_injected_n} | ${fmtMs(r.abr_median)} | ${r.overshoot_median ?? '—'} | ${r.rebuffer_count_median ?? '—'} | ${fmtMs(r.rebuffer_time_median)} | ${r.error_n} |\n`;
   }
   return md;
 }
