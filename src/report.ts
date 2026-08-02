@@ -26,7 +26,8 @@ export function renderScenarios(results: RunResult[]): string {
   for (const r of rows) {
     const rec = recovered(r);
     const abr = abrReactionMs(r);
-    md += `| ${r.scenario} | ${r.streamId} | ${r.player} | ${rec === null ? '—' : rec ? 'O' : 'X'} | ${abr === null ? '—' : `${abr}ms`} | ${overshoots(r)} | ${r.metrics.rebuffer_count} | ${r.metrics.rebuffer_time_ms}ms | ${r.error ?? '—'} |\n`;
+    const err = r.error === null ? '—' : r.error.replace(/\s*\n\s*/g, ' ').slice(0, 120);
+    md += `| ${r.scenario} | ${r.streamId} | ${r.player} | ${rec === null ? '—' : rec ? 'O' : 'X'} | ${abr === null ? '—' : `${abr}ms`} | ${overshoots(r)} | ${r.metrics.rebuffer_count} | ${r.metrics.rebuffer_time_ms}ms | ${err} |\n`;
   }
   return md;
 }
