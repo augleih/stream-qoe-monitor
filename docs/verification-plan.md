@@ -117,13 +117,16 @@ AVPlayer `AVPlayerItemAccessLog` 로 확장 가능하도록 설계한다.
 
 난수가 아닌 **결정적 시나리오**로 주입한다.
 난수를 쓰면 조건이 매번 달라져 플레이어 간 비교가 성립하지 않는다.
+**트리거 기준: 재생 위치(video.currentTime)** — 벽시계나 요청 횟수가 아니라 프레임 시간으로 동기화.
 
 | 주입 | 확인 대상 | 방법 |
 |---|---|---|
-| 세그먼트 404 | 재시도 여부 | `page.route` |
-| 세그먼트 지연 5초 | abandon 동작 | `page.route` |
-| 네트워크 3초 차단 | 자동 재개 여부 | CDP `offline` |
-| 매니페스트 갱신 실패 | 재생 유지 여부 | `page.route` |
+| 세그먼트 404 | 재시도 여부 | 재생 15초 후 첫 요청 404 (`page.route`) |
+| 세그먼트 지연 5초 | abandon 동작 | 재생 15초 후 첫 요청 5초 지연 (`page.route`) |
+| 네트워크 3초 차단 | 자동 재개 여부 | 재생 30초에 완전 차단 → 3초 경과 후 복구 (CDP `offline`) |
+| 매니페스트 갱신 실패 | 재생 유지 여부 | 재생 10초 후 갱신 요청 3회 차단 (`page.route`) |
+| 대역폭 하강 | ABR 하향 반응 | 재생 20초에 600kbps로 하강 (CDP `emulateNetworkConditions`) |
+| 대역폭 회복 | 상향 전환 지연 | 재생 20초에 무제한 회복 — `--network kbps600` 시작 전제 (CDP `emulateNetworkConditions`) |
 
 예시 시나리오:
 
