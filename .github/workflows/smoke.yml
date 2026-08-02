@@ -21,4 +21,4 @@ jobs:
         if: always()
         with:
           name: smoke-result
-          path: results/
+          path: results/hls_vod_hlsjs_unlimited_r0.json

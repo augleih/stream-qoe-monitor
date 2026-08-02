@@ -41,6 +41,7 @@ try {
     try {
       const r = await runOne(browser, server.url, spec);
       await saveResult(r);
+      if (r.error !== null) failures += 1;
       console.log(r.error
         ? `ERROR ${r.error}`
         : `startup ${r.metrics.startup_ms}ms rebuf ${r.metrics.rebuffer_count}`);
