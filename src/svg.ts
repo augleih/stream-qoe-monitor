@@ -32,3 +32,25 @@ export function barChart(
 ${bars}
 </svg>`;
 }
+
+export function lineChart(
+  title: string,
+  points: { label: string; value: number }[],
+): string {
+  const W = 640, H = 240, left = 60, right = 20, top = 40, bottom = 40;
+  const plotW = W - left - right, plotH = H - top - bottom;
+  const max = Math.max(...points.map(p => p.value), 1);
+  const x = (i: number) => left + (points.length === 1 ? plotW / 2 : (i / (points.length - 1)) * plotW);
+  const y = (v: number) => top + plotH - (v / max) * plotH;
+  const poly = points.map((p, i) => `${x(i).toFixed(1)},${y(p.value).toFixed(1)}`).join(' ');
+  const dots = points.map((p, i) => [
+    `<circle cx="${x(i).toFixed(1)}" cy="${y(p.value).toFixed(1)}" r="3" fill="#2563eb"/>`,
+    `<text x="${x(i).toFixed(1)}" y="${H - 12}" text-anchor="middle" font-size="10">${p.label}</text>`,
+    `<text x="${x(i).toFixed(1)}" y="${(y(p.value) - 8).toFixed(1)}" text-anchor="middle" font-size="10">${p.value}</text>`,
+  ].join('')).join('\n');
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" font-family="sans-serif">
+<text x="16" y="24" font-size="14" font-weight="bold">${title}</text>
+${points.length > 1 ? `<polyline points="${poly}" fill="none" stroke="#2563eb" stroke-width="2"/>` : ''}
+${dots}
+</svg>`;
+}

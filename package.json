@@ -11,6 +11,7 @@
     "scenario": "tsx src/cli/scenario.ts",
     "scenario-batch": "tsx src/cli/scenario-batch.ts",
     "report": "tsx src/cli/report.ts",
+    "trend": "tsx src/cli/trend.ts",
     "test": "vitest run",
     "typecheck": "tsc"
   },
