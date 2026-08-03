@@ -170,6 +170,8 @@ hls.js는 HLS 전용, dash.js는 DASH 전용이라 스트림 3종 × 라이브�
 | HLS 라이브 (Unified Streaming) | ✅ | ❌ | ✅ |
 | DASH 라이브 (DASH-IF livesim2) | ❌ | ✅ | ✅ |
 
+> 참고: 라이브 스트림 2종은 2026-08-02 BBC 테스트카드(9단계 래더)로 교체됨 — 근거와 경위는 [decisions.md](decisions.md) 참조.
+
 ```
 유효 조합 8개 × 네트워크 3단계 × 5회 반복 = 120회
 ```
@@ -181,7 +183,8 @@ hls.js는 HLS 전용, dash.js는 DASH 전용이라 스트림 3종 × 라이브�
 | 관찰 시간 | 세션당 60초 |
 | 계측 방식 | media element 이벤트 + Resource Timing |
 
-라이브 스트림 URL은 원 설계(Akamai)에서 두 차례 교체됐다 — 경위는
+라이브 스트림 URL은 원 설계(Akamai)에서 세 차례 교체됐다(DASH→livesim2,
+HLS→Unified Streaming, 이후 두 라이브 모두 BBC 테스트카드로) — 경위는
 [decisions.md](decisions.md) 참고.
 
 네트워크 단계는 Apple bipbop 스트림의 화질 래더
