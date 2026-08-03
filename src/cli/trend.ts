@@ -19,6 +19,7 @@ if (existsSync(historyPath)) {
 const runs = JSON.parse(gh(['run', 'list', '--workflow', 'smoke', '--status', 'success',
   '--limit', '50', '--json', 'databaseId,createdAt'])) as { databaseId: number; createdAt: string }[];
 
+let downloadFailures = 0;
 for (const run of runs.reverse()) {
   if (seen.has(run.databaseId)) continue;
   const tmp = `trends/tmp-${run.databaseId}`;
@@ -51,6 +52,7 @@ for (const run of runs.reverse()) {
     seen.add(run.databaseId);
     console.log(`collected run ${run.databaseId} (${point.date}): startup ${point.startup_ms}ms`);
   } catch (err) {
+    downloadFailures++;
     console.log(`skip run ${run.databaseId}: ${String(err).slice(0, 100)}`);
   } finally {
     await rm(tmp, { recursive: true, force: true });
@@ -76,3 +78,8 @@ for (const p of points) {
 }
 await writeFile('report/trend.md', md);
 console.log('wrote report/trend.md, report/charts/trend_startup.svg');
+
+if (downloadFailures > 0) {
+  console.log(`${downloadFailures} runs failed to download — 재실행 시 재시도됨`);
+  process.exitCode = 1;
+}
