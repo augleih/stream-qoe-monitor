@@ -1,0 +1,102 @@
+{
+  "runId": "dash_live_shaka_unlimited_manifest_fail_r1",
+  "player": "shaka",
+  "streamId": "dash_live",
+  "streamUrl": "https://rdmedia.bbc.co.uk/testcard/simulcast/manifests/avc-full.mpd",
+  "network": "unlimited",
+  "rep": 1,
+  "scenario": "manifest_fail",
+  "startedAt": "2026-08-02T12:22:42.364Z",
+  "libVersion": "v5.2.4",
+  "observeMs": 60000,
+  "metrics": {
+    "manifest_loaded_ms": 171,
+    "first_segment_ms": 282,
+    "metadata_ms": 301,
+    "first_frame_ms": 830,
+    "startup_ms": 830,
+    "breakdown": {
+      "manifest": 171,
+      "to_first_segment": 111,
+      "to_metadata": 19,
+      "to_first_frame": 529
+    },
+    "rebuffer_count": 0,
+    "rebuffer_time_ms": 0,
+    "rebuffer_ratio": 0,
+    "dropped_ratio": 0,
+    "time_weighted_height": 720
+  },
+  "timeline": [
+    {
+      "t": 0,
+      "type": "t0"
+    },
+    {
+      "t": 254,
+      "type": "quality_switch",
+      "detail": {
+        "height": 396,
+        "bitrate": 1094936
+      }
+    },
+    {
+      "t": 267,
+      "type": "waiting_initial"
+    },
+    {
+      "t": 301,
+      "type": "loadedmetadata"
+    },
+    {
+      "t": 624,
+      "type": "quality_switch",
+      "detail": {
+        "height": 720,
+        "bitrate": 5554680
+      }
+    },
+    {
+      "t": 830,
+      "type": "first_frame"
+    },
+    {
+      "t": 1437,
+      "type": "mark",
+      "detail": "manifest_abort_1"
+    },
+    {
+      "t": 2505,
+      "type": "mark",
+      "detail": "manifest_abort_2"
+    },
+    {
+      "t": 2506,
+      "type": "fatal",
+      "detail": "shaka error: code=1002"
+    },
+    {
+      "t": 2507,
+      "type": "fatal"
+    }
+  ],
+  "samples": [
+    {
+      "t": 1002,
+      "ct": 1785673343.84,
+      "buffer_s": 0.16,
+      "height": 720,
+      "dropped": 0,
+      "decoded": 12
+    },
+    {
+      "t": 2001,
+      "ct": 1785673344.84,
+      "buffer_s": 0,
+      "height": 720,
+      "dropped": 0,
+      "decoded": 13
+    }
+  ],
+  "error": "shaka error: code=1002"
+}

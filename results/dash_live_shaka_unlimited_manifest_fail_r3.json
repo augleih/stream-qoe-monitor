@@ -1,0 +1,102 @@
+{
+  "runId": "dash_live_shaka_unlimited_manifest_fail_r3",
+  "player": "shaka",
+  "streamId": "dash_live",
+  "streamUrl": "https://rdmedia.bbc.co.uk/testcard/simulcast/manifests/avc-full.mpd",
+  "network": "unlimited",
+  "rep": 3,
+  "scenario": "manifest_fail",
+  "startedAt": "2026-08-02T12:22:48.703Z",
+  "libVersion": "v5.2.4",
+  "observeMs": 60000,
+  "metrics": {
+    "manifest_loaded_ms": 123,
+    "first_segment_ms": 224,
+    "metadata_ms": 236,
+    "first_frame_ms": 1246,
+    "startup_ms": 1246,
+    "breakdown": {
+      "manifest": 123,
+      "to_first_segment": 101,
+      "to_metadata": 12,
+      "to_first_frame": 1010
+    },
+    "rebuffer_count": 0,
+    "rebuffer_time_ms": 0,
+    "rebuffer_ratio": 0,
+    "dropped_ratio": 0,
+    "time_weighted_height": null
+  },
+  "timeline": [
+    {
+      "t": 0,
+      "type": "t0"
+    },
+    {
+      "t": 197,
+      "type": "quality_switch",
+      "detail": {
+        "height": 396,
+        "bitrate": 1094936
+      }
+    },
+    {
+      "t": 211,
+      "type": "waiting_initial"
+    },
+    {
+      "t": 236,
+      "type": "loadedmetadata"
+    },
+    {
+      "t": 596,
+      "type": "quality_switch",
+      "detail": {
+        "height": 720,
+        "bitrate": 5554680
+      }
+    },
+    {
+      "t": 1246,
+      "type": "first_frame"
+    },
+    {
+      "t": 2064,
+      "type": "mark",
+      "detail": "manifest_abort_1"
+    },
+    {
+      "t": 2580,
+      "type": "mark",
+      "detail": "manifest_abort_2"
+    },
+    {
+      "t": 2585,
+      "type": "fatal",
+      "detail": "shaka error: code=1002"
+    },
+    {
+      "t": 2585,
+      "type": "fatal"
+    }
+  ],
+  "samples": [
+    {
+      "t": 1001,
+      "ct": 1785673350.71,
+      "buffer_s": 0,
+      "height": 396,
+      "dropped": 0,
+      "decoded": 0
+    },
+    {
+      "t": 2001,
+      "ct": 1785673351.41,
+      "buffer_s": 0.27,
+      "height": 720,
+      "dropped": 0,
+      "decoded": 41
+    }
+  ],
+  "error": "shaka error: code=1002"
+}

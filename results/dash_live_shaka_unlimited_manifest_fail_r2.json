@@ -1,0 +1,110 @@
+{
+  "runId": "dash_live_shaka_unlimited_manifest_fail_r2",
+  "player": "shaka",
+  "streamId": "dash_live",
+  "streamUrl": "https://rdmedia.bbc.co.uk/testcard/simulcast/manifests/avc-full.mpd",
+  "network": "unlimited",
+  "rep": 2,
+  "scenario": "manifest_fail",
+  "startedAt": "2026-08-02T12:22:45.085Z",
+  "libVersion": "v5.2.4",
+  "observeMs": 60000,
+  "metrics": {
+    "manifest_loaded_ms": 122,
+    "first_segment_ms": 240,
+    "metadata_ms": 247,
+    "first_frame_ms": 2049,
+    "startup_ms": 2049,
+    "breakdown": {
+      "manifest": 122,
+      "to_first_segment": 118,
+      "to_metadata": 7,
+      "to_first_frame": 1802
+    },
+    "rebuffer_count": 0,
+    "rebuffer_time_ms": 0,
+    "rebuffer_ratio": 0,
+    "dropped_ratio": 0,
+    "time_weighted_height": null
+  },
+  "timeline": [
+    {
+      "t": 0,
+      "type": "t0"
+    },
+    {
+      "t": 203,
+      "type": "quality_switch",
+      "detail": {
+        "height": 396,
+        "bitrate": 1094936
+      }
+    },
+    {
+      "t": 218,
+      "type": "waiting_initial"
+    },
+    {
+      "t": 247,
+      "type": "loadedmetadata"
+    },
+    {
+      "t": 1897,
+      "type": "quality_switch",
+      "detail": {
+        "height": 288,
+        "bitrate": 635496
+      }
+    },
+    {
+      "t": 2049,
+      "type": "first_frame"
+    },
+    {
+      "t": 2226,
+      "type": "mark",
+      "detail": "manifest_abort_1"
+    },
+    {
+      "t": 3387,
+      "type": "mark",
+      "detail": "manifest_abort_2"
+    },
+    {
+      "t": 3389,
+      "type": "fatal",
+      "detail": "shaka error: code=1002"
+    },
+    {
+      "t": 3389,
+      "type": "fatal"
+    }
+  ],
+  "samples": [
+    {
+      "t": 1001,
+      "ct": 1785673346.7,
+      "buffer_s": 0,
+      "height": 396,
+      "dropped": 0,
+      "decoded": 0
+    },
+    {
+      "t": 2000,
+      "ct": 1785673346.7,
+      "buffer_s": 0,
+      "height": 396,
+      "dropped": 0,
+      "decoded": 0
+    },
+    {
+      "t": 3001,
+      "ct": 1785673347.61,
+      "buffer_s": 11.66,
+      "height": 288,
+      "dropped": 0,
+      "decoded": 28
+    }
+  ],
+  "error": "shaka error: code=1002"
+}

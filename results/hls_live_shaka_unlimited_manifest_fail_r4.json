@@ -1,0 +1,100 @@
+{
+  "runId": "hls_live_shaka_unlimited_manifest_fail_r4",
+  "player": "shaka",
+  "streamId": "hls_live",
+  "streamUrl": "https://rdmedia.bbc.co.uk/testcard/simulcast/manifests/avc-full.m3u8",
+  "network": "unlimited",
+  "rep": 4,
+  "scenario": "manifest_fail",
+  "startedAt": "2026-08-02T12:17:38.103Z",
+  "libVersion": "v5.2.4",
+  "observeMs": 60000,
+  "metrics": {
+    "manifest_loaded_ms": 114,
+    "first_segment_ms": 452,
+    "metadata_ms": 574,
+    "first_frame_ms": null,
+    "startup_ms": null,
+    "breakdown": {
+      "manifest": 114,
+      "to_first_segment": 338,
+      "to_metadata": 122,
+      "to_first_frame": null
+    },
+    "rebuffer_count": 0,
+    "rebuffer_time_ms": 0,
+    "rebuffer_ratio": null,
+    "dropped_ratio": null,
+    "time_weighted_height": null
+  },
+  "timeline": [
+    {
+      "t": 0,
+      "type": "t0"
+    },
+    {
+      "t": 549,
+      "type": "quality_switch",
+      "detail": {
+        "height": 396,
+        "bitrate": 1102877
+      }
+    },
+    {
+      "t": 555,
+      "type": "waiting_initial"
+    },
+    {
+      "t": 574,
+      "type": "loadedmetadata"
+    },
+    {
+      "t": 657,
+      "type": "quality_switch",
+      "detail": {
+        "height": 1080,
+        "bitrate": 11941107
+      }
+    },
+    {
+      "t": 659,
+      "type": "mark",
+      "detail": "manifest_abort_1"
+    },
+    {
+      "t": 660,
+      "type": "mark",
+      "detail": "manifest_abort_2"
+    },
+    {
+      "t": 1217,
+      "type": "mark",
+      "detail": "manifest_abort_3"
+    },
+    {
+      "t": 1222,
+      "type": "fatal",
+      "detail": "shaka error: code=undefined"
+    },
+    {
+      "t": 1222,
+      "type": "fatal"
+    },
+    {
+      "t": 1222,
+      "type": "fatal",
+      "detail": "shaka error: code=undefined"
+    }
+  ],
+  "samples": [
+    {
+      "t": 1002,
+      "ct": 887.05,
+      "buffer_s": 0,
+      "height": 396,
+      "dropped": 0,
+      "decoded": 0
+    }
+  ],
+  "error": "shaka error: code=undefined"
+}

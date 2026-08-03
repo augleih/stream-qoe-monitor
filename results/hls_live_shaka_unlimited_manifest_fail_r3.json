@@ -1,0 +1,108 @@
+{
+  "runId": "hls_live_shaka_unlimited_manifest_fail_r3",
+  "player": "shaka",
+  "streamId": "hls_live",
+  "streamUrl": "https://rdmedia.bbc.co.uk/testcard/simulcast/manifests/avc-full.m3u8",
+  "network": "unlimited",
+  "rep": 3,
+  "scenario": "manifest_fail",
+  "startedAt": "2026-08-02T12:17:35.724Z",
+  "libVersion": "v5.2.4",
+  "observeMs": 60000,
+  "metrics": {
+    "manifest_loaded_ms": 172,
+    "first_segment_ms": 620,
+    "metadata_ms": 1275,
+    "first_frame_ms": null,
+    "startup_ms": null,
+    "breakdown": {
+      "manifest": 172,
+      "to_first_segment": 448,
+      "to_metadata": 655,
+      "to_first_frame": null
+    },
+    "rebuffer_count": 0,
+    "rebuffer_time_ms": 0,
+    "rebuffer_ratio": null,
+    "dropped_ratio": null,
+    "time_weighted_height": null
+  },
+  "timeline": [
+    {
+      "t": 0,
+      "type": "t0"
+    },
+    {
+      "t": 1247,
+      "type": "quality_switch",
+      "detail": {
+        "height": 396,
+        "bitrate": 1102877
+      }
+    },
+    {
+      "t": 1254,
+      "type": "waiting_initial"
+    },
+    {
+      "t": 1275,
+      "type": "loadedmetadata"
+    },
+    {
+      "t": 1324,
+      "type": "quality_switch",
+      "detail": {
+        "height": 1080,
+        "bitrate": 11941107
+      }
+    },
+    {
+      "t": 1326,
+      "type": "mark",
+      "detail": "manifest_abort_1"
+    },
+    {
+      "t": 1326,
+      "type": "mark",
+      "detail": "manifest_abort_2"
+    },
+    {
+      "t": 2158,
+      "type": "mark",
+      "detail": "manifest_abort_3"
+    },
+    {
+      "t": 2162,
+      "type": "fatal",
+      "detail": "shaka error: code=undefined"
+    },
+    {
+      "t": 2162,
+      "type": "fatal"
+    },
+    {
+      "t": 2163,
+      "type": "fatal",
+      "detail": "shaka error: code=undefined"
+    }
+  ],
+  "samples": [
+    {
+      "t": 1002,
+      "ct": 0,
+      "buffer_s": 0,
+      "height": 0,
+      "dropped": 0,
+      "decoded": 0
+    },
+    {
+      "t": 2000,
+      "ct": 887.05,
+      "buffer_s": 0,
+      "height": 396,
+      "dropped": 0,
+      "decoded": 0
+    }
+  ],
+  "error": "shaka error: code=undefined"
+}

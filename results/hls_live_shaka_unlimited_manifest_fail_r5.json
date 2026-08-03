@@ -1,0 +1,100 @@
+{
+  "runId": "hls_live_shaka_unlimited_manifest_fail_r5",
+  "player": "shaka",
+  "streamId": "hls_live",
+  "streamUrl": "https://rdmedia.bbc.co.uk/testcard/simulcast/manifests/avc-full.m3u8",
+  "network": "unlimited",
+  "rep": 5,
+  "scenario": "manifest_fail",
+  "startedAt": "2026-08-02T12:17:39.534Z",
+  "libVersion": "v5.2.4",
+  "observeMs": 60000,
+  "metrics": {
+    "manifest_loaded_ms": 96,
+    "first_segment_ms": 422,
+    "metadata_ms": 555,
+    "first_frame_ms": null,
+    "startup_ms": null,
+    "breakdown": {
+      "manifest": 96,
+      "to_first_segment": 326,
+      "to_metadata": 133,
+      "to_first_frame": null
+    },
+    "rebuffer_count": 0,
+    "rebuffer_time_ms": 0,
+    "rebuffer_ratio": null,
+    "dropped_ratio": null,
+    "time_weighted_height": null
+  },
+  "timeline": [
+    {
+      "t": 0,
+      "type": "t0"
+    },
+    {
+      "t": 482,
+      "type": "quality_switch",
+      "detail": {
+        "height": 396,
+        "bitrate": 1102877
+      }
+    },
+    {
+      "t": 487,
+      "type": "waiting_initial"
+    },
+    {
+      "t": 555,
+      "type": "loadedmetadata"
+    },
+    {
+      "t": 567,
+      "type": "quality_switch",
+      "detail": {
+        "height": 1080,
+        "bitrate": 11941107
+      }
+    },
+    {
+      "t": 569,
+      "type": "mark",
+      "detail": "manifest_abort_1"
+    },
+    {
+      "t": 569,
+      "type": "mark",
+      "detail": "manifest_abort_2"
+    },
+    {
+      "t": 1416,
+      "type": "mark",
+      "detail": "manifest_abort_3"
+    },
+    {
+      "t": 1420,
+      "type": "fatal",
+      "detail": "shaka error: code=undefined"
+    },
+    {
+      "t": 1420,
+      "type": "fatal"
+    },
+    {
+      "t": 1420,
+      "type": "fatal",
+      "detail": "shaka error: code=undefined"
+    }
+  ],
+  "samples": [
+    {
+      "t": 1001,
+      "ct": 887.05,
+      "buffer_s": 0,
+      "height": 396,
+      "dropped": 0,
+      "decoded": 0
+    }
+  ],
+  "error": "shaka error: code=undefined"
+}

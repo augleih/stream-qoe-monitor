@@ -1,0 +1,337 @@
+{
+  "runId": "dash_vod_shaka_unlimited_offline_3s_r2",
+  "player": "shaka",
+  "streamId": "dash_vod",
+  "streamUrl": "https://dash.akamaized.net/envivio/EnvivioDash3/manifest.mpd",
+  "network": "unlimited",
+  "rep": 2,
+  "scenario": "offline_3s",
+  "startedAt": "2026-08-02T11:55:52.217Z",
+  "libVersion": "v5.2.4",
+  "observeMs": 60000,
+  "metrics": {
+    "manifest_loaded_ms": 96,
+    "first_segment_ms": 132,
+    "metadata_ms": 169,
+    "first_frame_ms": 602,
+    "startup_ms": 602,
+    "breakdown": {
+      "manifest": 96,
+      "to_first_segment": 36,
+      "to_metadata": 37,
+      "to_first_frame": 433
+    },
+    "rebuffer_count": 0,
+    "rebuffer_time_ms": 0,
+    "rebuffer_ratio": 0,
+    "dropped_ratio": 0,
+    "time_weighted_height": 1080
+  },
+  "timeline": [
+    {
+      "t": 0,
+      "type": "t0"
+    },
+    {
+      "t": 107,
+      "type": "quality_switch",
+      "detail": {
+        "height": 432,
+        "bitrate": 1330800
+      }
+    },
+    {
+      "t": 111,
+      "type": "waiting_initial"
+    },
+    {
+      "t": 169,
+      "type": "loadedmetadata"
+    },
+    {
+      "t": 212,
+      "type": "quality_switch",
+      "detail": {
+        "height": 1080,
+        "bitrate": 5430800
+      }
+    },
+    {
+      "t": 602,
+      "type": "first_frame"
+    },
+    {
+      "t": 30567,
+      "type": "mark",
+      "detail": "offline_start"
+    },
+    {
+      "t": 32214,
+      "type": "fatal",
+      "detail": "shaka error: code=1002"
+    },
+    {
+      "t": 32214,
+      "type": "fatal"
+    }
+  ],
+  "samples": [
+    {
+      "t": 1001,
+      "ct": 0.45,
+      "buffer_s": 3.63,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 14
+    },
+    {
+      "t": 2003,
+      "ct": 1.45,
+      "buffer_s": 6.63,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 38
+    },
+    {
+      "t": 3002,
+      "ct": 2.45,
+      "buffer_s": 9.63,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 64
+    },
+    {
+      "t": 4001,
+      "ct": 3.45,
+      "buffer_s": 10.63,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 88
+    },
+    {
+      "t": 5002,
+      "ct": 4.45,
+      "buffer_s": 9.63,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 113
+    },
+    {
+      "t": 6003,
+      "ct": 5.45,
+      "buffer_s": 10.63,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 139
+    },
+    {
+      "t": 7003,
+      "ct": 6.45,
+      "buffer_s": 9.63,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 163
+    },
+    {
+      "t": 8002,
+      "ct": 7.45,
+      "buffer_s": 10.63,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 188
+    },
+    {
+      "t": 9003,
+      "ct": 8.45,
+      "buffer_s": 11.63,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 214
+    },
+    {
+      "t": 10001,
+      "ct": 9.44,
+      "buffer_s": 10.64,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 239
+    },
+    {
+      "t": 11003,
+      "ct": 10.45,
+      "buffer_s": 11.63,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 264
+    },
+    {
+      "t": 12003,
+      "ct": 11.45,
+      "buffer_s": 10.63,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 288
+    },
+    {
+      "t": 13001,
+      "ct": 12.45,
+      "buffer_s": 9.63,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 314
+    },
+    {
+      "t": 14002,
+      "ct": 13.45,
+      "buffer_s": 10.63,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 338
+    },
+    {
+      "t": 15003,
+      "ct": 14.45,
+      "buffer_s": 9.63,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 363
+    },
+    {
+      "t": 16001,
+      "ct": 15.45,
+      "buffer_s": 10.63,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 388
+    },
+    {
+      "t": 17002,
+      "ct": 16.45,
+      "buffer_s": 9.64,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 414
+    },
+    {
+      "t": 18001,
+      "ct": 17.45,
+      "buffer_s": 10.63,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 438
+    },
+    {
+      "t": 19002,
+      "ct": 18.45,
+      "buffer_s": 9.65,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 463
+    },
+    {
+      "t": 20003,
+      "ct": 19.45,
+      "buffer_s": 10.63,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 489
+    },
+    {
+      "t": 21001,
+      "ct": 20.45,
+      "buffer_s": 9.63,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 513
+    },
+    {
+      "t": 22002,
+      "ct": 21.45,
+      "buffer_s": 10.63,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 538
+    },
+    {
+      "t": 23003,
+      "ct": 22.45,
+      "buffer_s": 11.63,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 564
+    },
+    {
+      "t": 24001,
+      "ct": 23.45,
+      "buffer_s": 10.63,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 589
+    },
+    {
+      "t": 25002,
+      "ct": 24.45,
+      "buffer_s": 11.63,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 613
+    },
+    {
+      "t": 26003,
+      "ct": 25.45,
+      "buffer_s": 10.63,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 638
+    },
+    {
+      "t": 27001,
+      "ct": 26.45,
+      "buffer_s": 9.63,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 663
+    },
+    {
+      "t": 28002,
+      "ct": 27.45,
+      "buffer_s": 10.63,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 688
+    },
+    {
+      "t": 29002,
+      "ct": 28.45,
+      "buffer_s": 9.63,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 713
+    },
+    {
+      "t": 30002,
+      "ct": 29.45,
+      "buffer_s": 10.63,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 739
+    },
+    {
+      "t": 31002,
+      "ct": 30.45,
+      "buffer_s": 9.63,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 764
+    },
+    {
+      "t": 32002,
+      "ct": 31.45,
+      "buffer_s": 8.63,
+      "height": 1080,
+      "dropped": 0,
+      "decoded": 788
+    }
+  ],
+  "error": "shaka error: code=1002"
+}
