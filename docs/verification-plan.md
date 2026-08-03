@@ -128,15 +128,17 @@ AVPlayer `AVPlayerItemAccessLog` 로 확장 가능하도록 설계한다.
 | 대역폭 하강 | ABR 하향 반응 | 재생 20초에 600kbps로 하강 (CDP `emulateNetworkConditions`) |
 | 대역폭 회복 | 상향 전환 지연 | 재생 20초에 무제한 회복 — `--network kbps600` 시작 전제 (CDP `emulateNetworkConditions`) |
 
-예시 시나리오:
+예시 시나리오 (`offline_3s`, 재생 위치 앵커 — 벽시계 아님):
 
 ```
-0s   재생 시작
-30s  대역폭 1.5Mbps로 하강
-45s  네트워크 완전 차단 (3초)
-48s  복구
-60s  종료
+video.currentTime=0    재생 시작
+video.currentTime=30   네트워크 완전 차단 (CDP offline)
+                        3초 경과
+                        네트워크 복구
+observeMs 경과          관찰 종료
 ```
+
+트리거 기준의 상세 정의와 알려진 한계: [metrics.md](metrics.md#시나리오-트리거-기준-재생-위치-앵커).
 
 ### 제외 항목
 

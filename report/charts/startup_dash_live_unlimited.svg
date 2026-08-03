@@ -1,11 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="640" height="112" font-family="sans-serif">
 <text x="16" y="24" font-size="14" font-weight="bold">startup ms — dash_live_unlimited (중앙값/P95)</text>
 <text x="162" y="54" text-anchor="end" font-size="12">dashjs</text>
-<rect x="170" y="40" width="377.4" height="18" fill="#cbd5e1"/>
-<rect x="170" y="40" width="370.6" height="18" fill="#2563eb"/>
-<text x="536.6369130636913" y="54" font-size="11" text-anchor="end" fill="#ffffff">2098 / P95 2136</text>
+<rect x="170" y="40" width="135.7" height="18" fill="#cbd5e1"/>
+<rect x="170" y="40" width="57.7" height="18" fill="#2563eb"/>
+<text x="309.7005401755571" y="54" font-size="11">1800 / P95 4231</text>
 <text x="162" y="82" text-anchor="end" font-size="12">shaka</text>
 <rect x="170" y="68" width="380.0" height="18" fill="#cbd5e1"/>
-<rect x="170" y="68" width="372.6" height="18" fill="#2563eb"/>
-<text x="538.5801952580196" y="82" font-size="11" text-anchor="end" fill="#ffffff">2109 / P95 2151</text>
+<rect x="170" y="68" width="147.5" height="18" fill="#2563eb"/>
+<text x="313.53544902093176" y="82" font-size="11" text-anchor="end" fill="#ffffff">4600 / P95 11848</text>
 </svg>

@@ -1,5 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="640" height="240" font-family="sans-serif">
 <text x="16" y="24" font-size="14" font-weight="bold">daily smoke — startup ms (hls_vod × hlsjs, unlimited)</text>
-
-<circle cx="340.0" cy="40.0" r="3" fill="#2563eb"/><text x="340.0" y="228" text-anchor="middle" font-size="10">08-02</text><text x="340.0" y="32.0" text-anchor="middle" font-size="10">623</text>
+<polyline points="60.0,111.4 620.0,40.0" fill="none" stroke="#2563eb" stroke-width="2"/>
+<circle cx="60.0" cy="111.4" r="3" fill="#2563eb"/><text x="60.0" y="228" text-anchor="middle" font-size="10">08-02</text><text x="60.0" y="103.4" text-anchor="middle" font-size="10">623</text>
+<circle cx="620.0" cy="40.0" r="3" fill="#2563eb"/><text x="620.0" y="228" text-anchor="middle" font-size="10">08-02</text><text x="620.0" y="32.0" text-anchor="middle" font-size="10">1125</text>
 </svg>

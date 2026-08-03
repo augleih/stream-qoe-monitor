@@ -19,7 +19,11 @@ Player)를 비교해 "플레이어 선택은 트레이드오프 선택"이라는
 ## 무엇을
 
 - 스트림 4종(HLS/DASH × VOD/라이브)에 걸친 유효 조합 8개 × 네트워크 3단계 × 5회 = **120회** 자동 측정
-- 결정적 결함·조건 변화 시나리오 6종 (404 / 지연 / 차단 / 매니페스트 갱신 실패 / 대역폭 하강 / 대역폭 회복)
+- 결정적 결함·조건 변화 시나리오 6종 (404 / 지연 / 차단 / 매니페스트 갱신 실패 / 대역폭 하강 / 대역폭 회복) ×
+  5회 반복 = **120회**. 발동 기준은 벽시계·요청 횟수가 아니라 **재생 위치**(`video.currentTime`, [docs/metrics.md](docs/metrics.md#시나리오-트리거-기준-재생-위치-앵커)) —
+  프로토콜마다 요청 타이밍이 달라 생기는 편차를 없앤다. 집계도 "결함이 실제로 주입됐는가"를
+  먼저 나누는 **주입 인지 집계**(injected / trigger_timeout / 미주입)를 거쳐, 결함이 발동조차
+  안 한 런이 "정상 회복"으로 잘못 세지 않도록 한다
 - 지표는 CTA-2066 준거([docs/metrics.md](docs/metrics.md)), 통계는 중앙값+P95([docs/verification-plan.md](docs/verification-plan.md))
 
 ## 어떻게
@@ -44,8 +48,14 @@ npm i && npx playwright install chrome
 npm run validate-streams   # 8조합 재생 확인
 npm run measure -- --player hlsjs --stream hls_vod
 npm run matrix -- --networks unlimited,mbps1_5,kbps600 --reps 5
-npm run report
+npm run scenario-batch -- --reps 5   # 결함 시나리오 6종 배치 (재생 위치 트리거)
+npm run report                       # report/summary.md 재생성
+npm run trend                        # 일일 스모크 추이 재생성 (report/trend.md)
 ```
+
+CMCD([CTA-5004](https://cta.tech/), opt-in) 데모: `npm run serve` 후
+`player/index.html?player=hlsjs&src=<스트림 URL>&cmcd=1`로 열면 미디어 요청 쿼리에
+CMCD 파라미터가 실린다(기본값 off — 자세한 내용: [docs/metrics.md](docs/metrics.md#cmcd-common-media-client-data-cta-5004)).
 
 ## 결과 요약
 
@@ -71,15 +81,30 @@ unlimited 행에서 hlsjs는 중앙값 255ms인데 P95는 2253ms로 9배 뛴다 
 
 ![startup hls_vod kbps600](report/charts/startup_hls_vod_kbps600.svg)
 
-**hls_live (kbps600)는 위와 다르게 읽어야 한다.** 이 스트림은 720p
-단일 렌디션이라 화질을 낮출 옵션이 없다 — hlsjs 4656ms/rebuffer ratio
-0.0371, shaka 12608ms/0.0805로, 화질은 둘 다 그대로인 채 startup과
-rebuffer가 **둘 다** shaka 쪽이 나쁘다. 맞바꿀 화질 레버가 없으므로
-이건 트레이드오프가 아니라 두 라이브러리의 초기 버퍼링·재생 정책 차이로
-읽는다([검증 계획](docs/verification-plan.md) §6 "결과 해석 원칙"의
-"startup 느림 + rebuffering 많음 → 둘 다 나쁨" 케이스).
+**라이브 스트림(BBC R&D 테스트카드, HLS·DASH 동일 소스 9단계 래더 108p~1080p)도
+이제 ABR 비교가 가능하다.** 1단계에서는 라이브 소스(Unified Streaming HLS /
+DASH-IF livesim2 DASH)가 각각 렌디션 1개뿐이라 라이브 조건에서 화질 적응
+비교 자체가 성립하지 않았다. 2단계에서 BBC로 교체한 뒤 실측한 시간가중
+해상도는 hls_live hlsjs에서 kbps600 143p → mbps1_5 270p → unlimited 402p로,
+dash_live dashjs에서 126p → 221p → 274p로 네트워크가 좋아질수록 단조
+증가한다 — 라이브 조건에서도 대역폭에 따른 화질 적응이 실측으로 확인됐다.
+(예외: dash_live shaka는 unlimited 161p가 mbps1_5 203p보다 낮다 — 1회
+관찰로 원인 미확인.) 같은 라이브러리(shaka)가 두 프로토콜 모두에 있어
+직접 비교하면, startup 중앙값이 hls_live에서 kbps600 14572ms/mbps1_5
+10223ms/unlimited 12029ms인 반면 dash_live에서는 7117ms/4356ms/4600ms로
+세 조건 모두 HLS가 DASH보다 약 2~2.6배 느리다 — 원인은 검증하지 않은
+가설(라이브 엣지 거리 휴리스틱 차이)로만 남긴다.
 
-전체 24행 표·12개 차트·시나리오 결과: [report/summary.md](report/summary.md)
+**결함 시나리오 반복(5회)에서 shaka의 결함 내성 취약점이 통계로 드러났다.**
+`offline_3s`(재생 30초 지점 3초 완전 차단) VOD 조건에서 shaka는 dash_vod
+5/5·hls_vod 5/5 — 합계 **10/10 회차 모두 치명 에러로 재생이 중단**됐고,
+hlsjs·dashjs는 동일 조건 10/10 모두 정상 회복했다. "이 조건에서 재생
+중단으로 이어짐(설정으로 완화 가능성 있음 — 기본 설정 기준 측정)"으로
+읽는다. 자세한 내용과 라이브 매니페스트 결함(`manifest_fail`)의 해석
+주의사항: [report/observations.md](report/observations.md).
+
+전체 24행 표·12개 차트·시나리오 반복 집계: [report/summary.md](report/summary.md).
+일일 CI 스모크 추이: [report/trend.md](report/trend.md).
 
 ## AI 협업 방식
 
@@ -97,18 +122,23 @@ rebuffer가 **둘 다** shaka 쪽이 나쁘다. 맞바꿀 화질 레버가 없�
   DevTools Protocol) 기능이라 다른 브라우저 엔진에서는 동일하게 구현할 수
   없다. Safari는 HLS를 OS 네이티브(AVFoundation)로 재생해 애초에 측정
   대상인 라이브러리 계층을 거치지 않는다.
-- **라이브 스트림은 단일 렌디션**: hls_live(720p)와 dash_live(360p) 모두
-  테스트 가능한 공개 라이브 스트림이 렌디션 1개뿐이라, 라이브 조건에서는
-  ABR 화질 적응 비교가 불가능하다 — 위 결과 요약에서 다룬 이유다. ABR
-  비교는 VOD 조합에서만 유효하다.
-- **결함 주입 측정 사각지대**: DASH 세그먼트(~2초)가 HLS(~6~10초)보다
-  짧아, 세그먼트 요청 횟수 기준 결함이 재생 시작 직후(t<1000ms)에 발동돼
-  회복 판정이 비교할 이전 샘플을 찾지 못하고 `null`을 반환하는 경우가
-  있다. `manifest_fail`(dashjs × dash_live) 조합은 60초·120초 관찰 창
-  모두에서 결함이 실제로 주입되지 않아 이 조합의 시나리오 결과는 무효
-  데이터다 — 자세한 내용: [report/observations.md](report/observations.md).
+- **결함 주입 트리거는 라이브 스트림에서 미해소**: 결함 발동 기준을 재생
+  위치(`video.currentTime`)로 바꾸며 VOD에서는 프로토콜 간 편차를
+  Δ475ms까지 좁혔지만(과거 요청 횟수 기준으로는 최대 ~50초 편차), 라이브
+  스트림은 `currentTime`이 재생 시작부터 세는 상대값이 아니라 스트림
+  타임라인상의 절대 위치라 이 앵커가 의도대로 작동하지 않는다 — 결함이
+  "재생 안정 구간 이후"가 아니라 사실상 재생 시작 전후에 발동한다.
+  `manifest_fail`(라이브) 결과는 그래서 "라이브 갱신 실패 내성"이 아니라
+  "시작 매니페스트 견고성"으로 읽어야 한다. `manifest_fail`(dashjs ×
+  dash_live) 조합은 이번 재측정에서도 60초 관찰 창 안에 결함이 한 번도
+  주입되지 않아(5/5 미주입) 무효 데이터로 유지한다 — 자세한 내용:
+  [report/observations.md](report/observations.md).
+- **추이 데이터는 축적 초기 단계**: 일일 CI 스모크가 쌓는 [report/trend.md](report/trend.md)는
+  아직 데이터 포인트가 적고, CI 러너의 성능 편차(공유 클라우드 VM)가
+  섞여 있어 로컬 측정과 직접 비교할 수 없다 — 같은 CI 환경 안에서의
+  날짜 간 추이 비교로만 유효하다.
 - **공개 테스트 스트림 의존**: 자체 CDN·인코딩 파이프라인이 아니라
-  Apple / DASH-IF / Unified Streaming의 공개 데모 스트림을 쓴다. 스트림이
+  Apple / DASH-IF / BBC R&D의 공개 데모 스트림을 쓴다. 스트림이
   죽으면 URL을 교체해야 하고(교체 이력: [docs/decisions.md](docs/decisions.md)),
   실제 서비스 CDN·인코딩 특성은 반영하지 않는다.
 - **DRM 미측정**: 라이선스 요청·복호화는 검증 범위에서 제외했다(공개

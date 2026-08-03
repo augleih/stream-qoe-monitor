@@ -1,11 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="640" height="112" font-family="sans-serif">
 <text x="16" y="24" font-size="14" font-weight="bold">startup ms — dash_live_mbps1_5 (중앙값/P95)</text>
 <text x="162" y="54" text-anchor="end" font-size="12">dashjs</text>
-<rect x="170" y="40" width="303.9" height="18" fill="#cbd5e1"/>
-<rect x="170" y="40" width="298.9" height="18" fill="#2563eb"/>
-<text x="477.8654867256637" y="54" font-size="11">2222 / P95 2259</text>
+<rect x="170" y="40" width="380.0" height="18" fill="#cbd5e1"/>
+<rect x="170" y="40" width="279.5" height="18" fill="#2563eb"/>
+<text x="445.45427484703157" y="54" font-size="11" text-anchor="end" fill="#ffffff">4447 / P95 6047</text>
 <text x="162" y="82" text-anchor="end" font-size="12">shaka</text>
-<rect x="170" y="68" width="380.0" height="18" fill="#cbd5e1"/>
-<rect x="170" y="68" width="324.3" height="18" fill="#2563eb"/>
-<text x="490.3115044247788" y="82" font-size="11" text-anchor="end" fill="#ffffff">2411 / P95 2825</text>
+<rect x="170" y="68" width="375.7" height="18" fill="#cbd5e1"/>
+<rect x="170" y="68" width="273.7" height="18" fill="#2563eb"/>
+<text x="439.7357367289565" y="82" font-size="11" text-anchor="end" fill="#ffffff">4356 / P95 5979</text>
 </svg>
