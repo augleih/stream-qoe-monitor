@@ -54,3 +54,27 @@ ${points.length > 1 ? `<polyline points="${poly}" fill="none" stroke="#2563eb" s
 ${dots}
 </svg>`;
 }
+
+export function valueBarChart(
+  title: string,
+  rows: { label: string; value: number; display?: string }[],
+): string {
+  const W = 640, rowH = 24, left = 190, right = 80;
+  const H = rows.length * rowH + 48;
+  const max = Math.max(...rows.map(r => r.value), 1);
+  const x = (v: number) => (v / max) * (W - left - right);
+  const bars = rows.map((r, i) => {
+    const y = 36 + i * rowH;
+    const w = x(r.value);
+    const label = r.display ?? String(r.value);
+    return [
+      `<text x="${left - 8}" y="${y + 12}" text-anchor="end" font-size="11">${r.label}</text>`,
+      `<rect x="${left}" y="${y}" width="${w.toFixed(1)}" height="15" fill="#2563eb"/>`,
+      `<text x="${left + w + 4}" y="${y + 12}" font-size="11">${label}</text>`,
+    ].join('\n');
+  }).join('\n');
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" font-family="sans-serif">
+<text x="16" y="22" font-size="14" font-weight="bold">${title}</text>
+${bars}
+</svg>`;
+}
