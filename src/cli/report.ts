@@ -1,5 +1,5 @@
 import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
-import { aggregate } from '../aggregate.js';
+import { aggregate, aggregateScenarios } from '../aggregate.js';
 import { renderScenarios, renderTables } from '../report.js';
 import { barChart } from '../svg.js';
 import type { RunResult } from '../types.js';
@@ -12,8 +12,10 @@ for (const f of files) {
 console.log(`loaded ${results.length} results`);
 
 const rows = aggregate(results);
+const scenRows = aggregateScenarios(results);
 await mkdir('report', { recursive: true });
 await writeFile('report/summary.json', JSON.stringify(rows, null, 2));
+await writeFile('report/scenarios.json', JSON.stringify(scenRows, null, 2));
 
 await mkdir('report/charts', { recursive: true });
 const chartLinks: string[] = [];
@@ -35,7 +37,7 @@ for (const [key, groupRows] of groups) {
 }
 
 // Build summary.md with optional observations
-let summaryContent = renderTables(rows) + '\n## 차트\n\n' + chartLinks.join('\n\n') + '\n' + renderScenarios(results);
+let summaryContent = renderTables(rows) + '\n## 차트\n\n' + chartLinks.join('\n\n') + '\n' + renderScenarios(scenRows);
 try {
   const observations = await readFile('report/observations.md', 'utf8');
   summaryContent += '\n' + observations;
@@ -43,4 +45,4 @@ try {
   // observations.md doesn't exist, continue without it
 }
 await writeFile('report/summary.md', summaryContent);
-console.log('wrote report/summary.json, report/summary.md');
+console.log('wrote report/summary.json, report/scenarios.json, report/summary.md');

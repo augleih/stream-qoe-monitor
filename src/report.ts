@@ -1,6 +1,4 @@
-import { aggregateScenarios } from './aggregate.js';
-import type { AggRow } from './aggregate.js';
-import type { RunResult } from './types.js';
+import type { AggRow, ScenAggRow } from './aggregate.js';
 
 const fmt = (v: number | null, unit = ''): string => (v === null ? '—' : `${v}${unit}`);
 
@@ -18,8 +16,7 @@ export function renderTables(rows: AggRow[]): string {
   return md;
 }
 
-export function renderScenarios(results: RunResult[]): string {
-  const rows = aggregateScenarios(results);
+export function renderScenarios(rows: ScenAggRow[]): string {
   if (rows.length === 0) return '';
   const fmtMs = (v: number | null) => (v === null ? '—' : `${v}ms`);
   let md = '\n## 결함·조건 변화 시나리오 결과 (반복 집계)\n\n';
