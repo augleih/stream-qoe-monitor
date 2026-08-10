@@ -68,3 +68,11 @@ export interface RunResult {
   samples: Sample[];
   error: string | null;
 }
+
+export interface TrendPoint {
+  runId: number;
+  date: string;               // YYYY-MM-DD
+  startup_ms: number | null;
+  rebuffer_ratio: number | null;
+  error: string | null;
+}

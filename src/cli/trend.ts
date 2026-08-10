@@ -2,8 +2,7 @@ import { execFileSync } from 'node:child_process';
 import { existsSync } from 'node:fs';
 import { appendFile, mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { lineChart } from '../svg.js';
-
-interface TrendPoint { runId: number; date: string; startup_ms: number | null; rebuffer_ratio: number | null; error: string | null; }
+import type { TrendPoint } from '../types.js';
 
 const gh = (args: string[]): string => execFileSync('gh', args, { encoding: 'utf8' });
 
