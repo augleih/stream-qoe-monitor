@@ -13,6 +13,7 @@
     "report": "tsx src/cli/report.ts",
     "dashboard": "tsx src/cli/dashboard.ts",
     "trend": "tsx src/cli/trend.ts",
+    "trend-append": "tsx src/cli/trend-append.ts",
     "test": "vitest run",
     "typecheck": "tsc"
   },

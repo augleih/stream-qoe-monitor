@@ -1,7 +1,7 @@
 import { execFileSync } from 'node:child_process';
 import { existsSync } from 'node:fs';
 import { appendFile, mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
-import { lineChart } from '../svg.js';
+import { renderTrendMd, trendChartSvg } from '../trend.js';
 import type { TrendPoint } from '../types.js';
 
 const gh = (args: string[]): string => execFileSync('gh', args, { encoding: 'utf8' });
@@ -15,7 +15,7 @@ if (existsSync(historyPath)) {
   }
 }
 
-const runs = JSON.parse(gh(['run', 'list', '--workflow', 'smoke', '--status', 'success',
+const runs = JSON.parse(gh(['run', 'list', '--workflow', 'smoke', '--status', 'completed',
   '--limit', '50', '--json', 'databaseId,createdAt'])) as { databaseId: number; createdAt: string }[];
 
 let downloadFailures = 0;
@@ -64,18 +64,8 @@ const ok = points.filter(p => p.startup_ms !== null);
 console.log(`history: ${points.length} runs (${ok.length} with startup)`);
 
 await mkdir('report/charts', { recursive: true });
-await writeFile('report/charts/trend_startup.svg',
-  lineChart('daily smoke — startup ms (hls_vod × hlsjs, unlimited)',
-    ok.map(p => ({ label: p.date.slice(5), value: p.startup_ms as number }))));
-
-let md = '# 일일 스모크 추이\n\n';
-md += '매일 06:00 KST CI가 측정한 hls_vod × hlsjs (무제한 네트워크, 30초 관찰) 추이.\n\n';
-md += '![trend](charts/trend_startup.svg)\n\n';
-md += '| date | startup_ms | rebuffer_ratio | error |\n|---|---|---|---|\n';
-for (const p of points) {
-  md += `| ${p.date} | ${p.startup_ms ?? '—'} | ${p.rebuffer_ratio ?? '—'} | ${p.error ?? '—'} |\n`;
-}
-await writeFile('report/trend.md', md);
+await writeFile('report/charts/trend_startup.svg', trendChartSvg(points));
+await writeFile('report/trend.md', renderTrendMd(points));
 console.log('wrote report/trend.md, report/charts/trend_startup.svg');
 
 if (downloadFailures > 0) {
