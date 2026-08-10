@@ -3,6 +3,8 @@
 웹 스트리밍 재생 품질(QoE)을 지속적으로 자동 측정·감시하는 도구.
 CI에서 매일 측정이 돌고([.github/workflows/smoke.yml](.github/workflows/smoke.yml)),
 같은 장치로 hls.js / dash.js / Shaka Player 비교 벤치마크를 산출했다.
+전체 결과는 [대시보드](https://augleih.github.io/stream-qoe-monitor/)에서 한눈에 볼 수 있다
+(매일 CI가 추이를 갱신·재배포).
 
 ## 왜
 
@@ -51,6 +53,7 @@ npm run matrix -- --networks unlimited,mbps1_5,kbps600 --reps 5
 npm run scenario-batch -- --reps 5   # 결함 시나리오 6종 배치 (재생 위치 트리거)
 npm run report                       # report/summary.md 재생성
 npm run trend                        # 일일 스모크 추이 재생성 (report/trend.md)
+npm run dashboard                    # dashboard/index.html 재생성 (Pages 배포물)
 ```
 
 CMCD([CTA-5004](https://cta.tech/), opt-in) 데모: `npm run serve` 후
