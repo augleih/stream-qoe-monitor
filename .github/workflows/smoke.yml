@@ -22,3 +22,52 @@ jobs:
         with:
           name: smoke-result
           path: results/hls_vod_hlsjs_unlimited_r0.json
+  trend-and-deploy:
+    needs: smoke
+    # always(): 측정이 에러 런이어도(smoke 잡 실패) 추이에 에러로 기록하고 배포한다
+    if: ${{ always() && github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+      - uses: actions/download-artifact@v4
+        if: github.event_name == 'schedule'
+        continue-on-error: true   # smoke가 측정 전에 죽으면 아티팩트가 없을 수 있음
+        with:
+          name: smoke-result
+          path: smoke-artifact
+      - name: Append trend point and push
+        if: github.event_name == 'schedule'
+        run: |
+          if [ -f smoke-artifact/hls_vod_hlsjs_unlimited_r0.json ]; then
+            npm run trend-append -- --run-id "$GITHUB_RUN_ID" --file smoke-artifact/hls_vod_hlsjs_unlimited_r0.json
+            if ! git diff --quiet; then
+              git config user.name 'github-actions[bot]'
+              git config user.email 'github-actions[bot]@users.noreply.github.com'
+              git add trends/history.jsonl report/trend.md report/charts/trend_startup.svg
+              git commit -m "data: daily smoke trend $(date -u +%F) [skip ci]"
+              git push
+            fi
+          else
+            echo "no smoke artifact — skip trend append"
+          fi
+      - run: npm run dashboard
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dashboard
+      - id: deploy
+        uses: actions/deploy-pages@v4
